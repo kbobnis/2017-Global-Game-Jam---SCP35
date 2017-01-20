@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Cryptography;
 using UnityEngine;
 
 namespace Structures
@@ -13,12 +12,14 @@ namespace Structures
 		public string[] RoomNames;
 		public int[,] Floor;
 
-		public void Generate(GameObject parent)
+		public void Generate(Transform parent)
 		{
 			for(int i = 0; i < Width; i++)
 			{
 				for(int j = 0; j < Height; j++)
-				{ // Generate room
+				{
+					GameObject go = new GameObject("Room [" + Width + ", " + Height + "]");
+
 				}
 			}
 		}
