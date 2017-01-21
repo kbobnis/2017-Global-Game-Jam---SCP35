@@ -11,7 +11,7 @@ namespace Structures
 	}
 
 	[Serializable]
-	public class Level
+	public class Room
 	{
 		public const int Height = 9;
 		public const int Width = 16;
@@ -25,7 +25,7 @@ namespace Structures
 				for(int j = 0; j < Height; j++)
 				{
 					Object.Instantiate(
-						Main.Instance.Tiles[layers[0].data[i + j * Width]],
+						Game.Instance.Tiles[layers[0].data[i + j * Width] - 1],
 						new Vector2(Width, Height),
 						Quaternion.identity,
 						parent);

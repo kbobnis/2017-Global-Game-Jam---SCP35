@@ -4,21 +4,15 @@ using UnityEngine.AI;
 
 namespace Characters
 {
-	public struct Attack
-	{
-		public int Strength;
-		public float Range;
-		public float Angle;
-		public float Delay;
-		public float Cooldown;
-	}
 
+	[Serializable]
 	public enum BehaviourMode
 	{
 		Runner,
 		Chaser
 	}
 
+	[Serializable]
 	public struct Behaviour
 	{
 		public BehaviourMode Mode;
@@ -26,8 +20,11 @@ namespace Characters
 		public float Angle;
 		public bool SeeThroughObstacles;
 		public bool ChaseThroughDoors;
+
+		public Collider Collider;
 	}
 
+	[Serializable]
 	public struct Anim
 	{
 		public Animation Walk;
@@ -39,7 +36,6 @@ namespace Characters
 	{
 		public int Hp;
 		public int Speed;
-		public Attack Attack;
 		public Behaviour Behaviour;
 		public Anim Anim;
 
@@ -54,17 +50,20 @@ namespace Characters
 			set
 			{
 				_isUserControlled = value;
-				NavMeshAgent.enabled = value;
+				NavMeshAgent.enabled = !value;
 			}
 		}
 
 		public void Start()
 		{
-			IsUserControlled = false;
 			Collider = GetComponent<Collider>();
 			Rigidbody = GetComponent<Rigidbody>();
 			NavMeshAgent = GetComponent<NavMeshAgent>();
+
+			IsUserControlled = false;
 		}
+
+		public abstract void Init();
 
 		/// <summary>
 		/// Take control of body.
