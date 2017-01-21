@@ -3,7 +3,7 @@ using Utilities;
 
 namespace Controllers
 {
-	public class CameraMan : MonoBehaviour
+	public class CameraController : MonoBehaviour
 	{
 
 		public Vector3 CameraOffset = new Vector3(-.5f, 10f, 2f);
