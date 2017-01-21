@@ -34,22 +34,24 @@ namespace Characters
 	[RequireComponent(typeof(NavMeshAgent), typeof(Rigidbody), typeof(Collider))]
 	public abstract class AbstractBody : MonoBehaviour
 	{
-		public int Hp;
-		public int Speed;
+		public float Hp;
+		public float Speed;
 		public Behaviour Behaviour;
 		public Anim Anim;
 
-		public NavMeshAgent NavMeshAgent;
-		public Rigidbody Rigidbody;
-		public Collider Collider;
+		protected float AttackCooldown;
 
-		private bool _isUserControlled;
-		public bool IsUserControlled
+		protected NavMeshAgent NavMeshAgent;
+		protected Rigidbody Rigidbody;
+		protected Collider Collider;
+
+		private bool _isPlayerControlled;
+		public bool IsPlayerControlled
 		{
-			get { return _isUserControlled; }
+			get { return _isPlayerControlled; }
 			set
 			{
-				_isUserControlled = value;
+				_isPlayerControlled = value;
 				NavMeshAgent.enabled = !value;
 			}
 		}
@@ -60,10 +62,10 @@ namespace Characters
 			Rigidbody = GetComponent<Rigidbody>();
 			NavMeshAgent = GetComponent<NavMeshAgent>();
 
-			IsUserControlled = false;
-		}
+			IsPlayerControlled = false;
 
-		public abstract void Init();
+			Init();
+		}
 
 		/// <summary>
 		/// Take control of body.
@@ -72,11 +74,23 @@ namespace Characters
 		/// <param name="vAxis">Vertical move axis</param>
 		public virtual void Control(float hAxis, float vAxis)
 		{
-			if(NavMeshAgent.enabled || IsUserControlled)
+			if(NavMeshAgent.enabled || IsPlayerControlled)
 			{
 				throw new Exception("Cannot control body with NavMeshAgent enabled!");
 			}
 			Rigidbody.velocity = new Vector3(hAxis * Speed, vAxis * Speed);
+		}
+
+		/// <summary>
+		/// Die
+		/// </summary>
+		public virtual void Die()
+		{
+			Destroy(gameObject);
+			if(IsPlayerControlled)
+			{
+				// TODO: Do something if player was controlling this character.
+			}
 		}
 
 		/// <summary>
@@ -94,15 +108,16 @@ namespace Characters
 		}
 
 		/// <summary>
+		/// Init components etc.. Called by superclass in Start().
+		/// </summary>
+		public abstract void Init();
+
+		/// <summary>
 		/// Attack with your weapon and try to damage bodies
 		/// in your range
 		/// </summary>
 		public abstract void Fire();
 
-		/// <summary>
-		/// Die
-		/// </summary>
-		public abstract void Die();
 
 		/// <summary>
 		/// Fire a deathrattle

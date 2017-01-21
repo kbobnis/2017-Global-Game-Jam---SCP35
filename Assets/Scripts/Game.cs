@@ -9,6 +9,7 @@ public class Game : MonoBehaviour
 	public LevelData Data { get; private set; }
 	public GameObject[] Tiles;
 	public GameObject Floor;
+	public GameObject[] Bullets;
 
 	private void Awake()
 	{
@@ -57,5 +58,13 @@ public class Game : MonoBehaviour
 	public static void StartAsync(IEnumerator coroutine)
 	{
 		Game.Instance.StartCoroutine(coroutine);
+	}
+	public static void Quit()
+	{
+	#if UNITY_EDITOR
+		Debug.Break();
+	#else
+		Application.Quit();
+	#endif
 	}
 }
