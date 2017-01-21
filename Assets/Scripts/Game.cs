@@ -12,9 +12,7 @@ public class Game : MonoBehaviour
 
 	public LevelData LevelData { get; private set; }
 	public BodyData BodyData { get; private set; }
-	public GameObject[] Tiles;
-	public GameObject Floor;
-	public GameObject[] Bullets;
+	public TilesData TilesData { get; private set; }
 
 	private void Awake()
 	{
@@ -56,8 +54,6 @@ public class Game : MonoBehaviour
 				"data/levels/Room7"      // 10
 			}
 		};
-		GameObject go = new GameObject("Level");
-		LevelData.Generate(go.transform);
 		BodyData = new BodyData
 		{
 			BodyManifests = new Dictionary<string, Type>()
@@ -65,6 +61,24 @@ public class Game : MonoBehaviour
 				{"Prisoner0", typeof(Prisoner)}
 			}
 		};
+		TilesData = new TilesData()
+		{
+			Tiles = new Dictionary<int, string>()
+			{
+				{-1, "Floor"},
+				{0, "Wall"},
+				{1, "Filler1"},
+				{2, "Desk1.W"},
+				{3, "Desk1.E"},
+				{4, "Desk2.W"},
+				{5, "Desk2.E"},
+				{6, "Cabinet1"},
+				{7, "Cabinet2"},
+				{8, "Doors0"}
+			}
+		};
+		GameObject go = new GameObject("Level");
+		LevelData.Generate(go.transform);
 		BodyData.SpawnBody("Prisoner0", new Vector3(0, 0, 3));
 	}
 

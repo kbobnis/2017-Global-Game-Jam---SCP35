@@ -32,6 +32,8 @@ namespace Structures
 		public const int Height = 9;
 		public const int Width = 16;
 
+
+
 		public Layer[] layers;
 
 		public void Generate(Transform parent)
@@ -40,9 +42,8 @@ namespace Structures
 			Transform roomTransform = room.transform;
 			roomTransform.SetParent(parent);
 			GameObject floor = new GameObject("Floor");
-			Transform floorTransfrom = floor.transform;
-			floorTransfrom.SetParent(parent);
-			floorTransfrom.localPosition = new Vector3(0, 0, 1);
+			Transform floorTransform = floor.transform;
+			floorTransform.SetParent(parent);
 
 			for(int i = 0; i < Width; i++)
 			{
@@ -51,12 +52,10 @@ namespace Structures
 					int n = layers[0].data[i + j * Width];
 					if(n > 0)
 					{
-						GameObject go = Object.Instantiate(Game.Instance.Tiles[n - 1], roomTransform);
-						go.transform.localPosition = new Vector3(i, j);
+						Game.Instance.TilesData.SpawnTile(n-1, new Vector3(i, j), Rotation.North, roomTransform);
 					}
 					{
-						GameObject go = Object.Instantiate(Game.Instance.Floor, floorTransfrom);
-						go.transform.localPosition = new Vector3(i, j);
+						Game.Instance.TilesData.SpawnTile(-1, new Vector3(i, j, 1), Rotation.North, floorTransform);
 					}
 				}
 			}

@@ -19,11 +19,15 @@ namespace Characters.Abstract
 		/// How often can we fire.
 		/// </summary>
 		public float Cooldown;
+		/// <summary>
+		/// How far will bullet fly.
+		/// </summary>
+		public float Range;
 
 		/// <summary>
-		/// Bullet prefab index
+		/// Bullet prefab name.
 		/// </summary>
-		public int Bullet;
+		public string Bullet;
 	}
 
 	[Serializable]
@@ -63,7 +67,7 @@ namespace Characters.Abstract
 			float lookAngle = Transfrom.eulerAngles.z;
 			Vector3 bulletForce = Quaternion.AngleAxis(lookAngle, Vector3.forward) * Vector3.right * Attack.Speed;
 			GameObject bullet = Object.Instantiate(
-				Game.Instance.Bullets[Attack.Bullet],
+				Resources.Load<GameObject>(Attack.Bullet),
 				BulletHole.position,
 				Quaternion.identity);
 			Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
