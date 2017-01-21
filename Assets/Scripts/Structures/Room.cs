@@ -33,8 +33,6 @@ namespace Structures
 		public const int Height = 9;
 		public const int Width = 16;
 
-
-
 		public Layer[] layers;
 
 		public void Generate(Transform parent)
