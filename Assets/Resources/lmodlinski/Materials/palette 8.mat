@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: palette
+  m_Name: palette 8
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
@@ -48,11 +48,7 @@ Material:
     - first:
         name: _MainTex
       second:
-<<<<<<< HEAD
-        m_Texture: {fileID: 2800000, guid: 73e3d79b16ea8482683f3106dc2f5eea, type: 3}
-=======
-        m_Texture: {fileID: 2800000, guid: 0e3e76c322f6c6a4f85fc4c6b4c52bd6, type: 3}
->>>>>>> f32e46f0d61f5a8d9571db11a4d41d83e53e6795
+        m_Texture: {fileID: 2800000, guid: ca4f72e0ff5307b48a5bc921e4b41958, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -125,11 +121,7 @@ Material:
     m_Colors:
     - first:
         name: _Color
-<<<<<<< HEAD
       second: {r: 0.8, g: 0.8, b: 0.8, a: 1}
-=======
-      second: {r: 1, g: 1, b: 1, a: 1}
->>>>>>> f32e46f0d61f5a8d9571db11a4d41d83e53e6795
     - first:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}
