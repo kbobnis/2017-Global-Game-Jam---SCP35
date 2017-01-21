@@ -34,6 +34,7 @@ namespace Characters
 				position,
 				Quaternion.identity);
 			BodyComponent bodyComponent = go.GetComponent<BodyComponent>() ?? go.AddComponent<BodyComponent>();
+			go.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
 			bodyComponent.Body = Bodies[name];
 			return go;
 		}

@@ -14,7 +14,7 @@ public class Game : MonoBehaviour
 	public LevelManager LevelManager { get; private set; }
 	public BodyManager BodyManager { get; private set; }
 	public TileManager TileManager { get; private set; }
-	public PlayerManager PlayerManager { get; private set; }
+	public Spawner Spawner { get; private set; }
 
 	public PlayerInput Player;
 
@@ -80,7 +80,7 @@ public class Game : MonoBehaviour
 				{8, "Doors0"}
 			}
 		};
-		PlayerManager = new PlayerManager();
+		Spawner = new Spawner();
 		GameObject go = new GameObject("Level");
 		LevelManager.Generate(go.transform);
 		StartCoroutine(SpawnPlayer());
@@ -94,8 +94,11 @@ public class Game : MonoBehaviour
 	public IEnumerator SpawnPlayer()
 	{
 		yield return new WaitForSeconds(0.2f);
-		PlayerManager.SpawnPlayer(1, 0);
-		PlayerManager.SpawnPlayer(1, 1);
+		Spawner.SpawnPlayer(1, 0);
+		Spawner.SpawnPlayer(1, 1);
+
+
+
 		Camera.main.gameObject.AddComponent<CameraMan>();
 	}
 
