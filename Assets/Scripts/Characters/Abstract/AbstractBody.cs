@@ -1,4 +1,5 @@
 ﻿using System;
+using AIs;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -21,7 +22,7 @@ namespace Characters.Abstract
 		public bool SeeThroughObstacles;
 		public bool ChaseThroughDoors;
 
-		public Collider Collider;
+		public ConditionalBehaviour StateMachine;
 	}
 
 	[Serializable]
@@ -29,13 +30,13 @@ namespace Characters.Abstract
 	{
 		public float Speed;
 		public Behaviour Behaviour;
+		public NavMeshAgent NavMeshAgent;
 
 		protected float AttackCooldown;
 
 		protected BodyComponent Parent;
 		protected GameObject GameObject;
 
-		protected NavMeshAgent NavMeshAgent;
 		protected Rigidbody Rigidbody;
 		protected Collider Collider;
 
@@ -104,6 +105,19 @@ namespace Characters.Abstract
 			Rigidbody = parent.GetComponent<Rigidbody>();
 			NavMeshAgent = parent.GetComponent<NavMeshAgent>();
 			NavMeshAgent.velocity = new Vector3(Speed, 0, Speed);
+
+			switch(Behaviour.Mode) {
+				case BehaviourMode.Runner:
+					Behaviour.StateMachine = new RunnerBehaviour();
+					break;
+				case BehaviourMode.Chaser:
+					Behaviour.StateMachine = new ChaserBehaviour();
+					break;
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+
+			Behaviour.StateMachine.Init(parent);
 
 			IsPlayerControlled = false;
 		}
