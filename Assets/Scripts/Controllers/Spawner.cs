@@ -15,7 +15,7 @@ namespace Controllers
 
 	public class Spawner
 	{
-		private int PlayersSpawned = 0;
+		private int _playersSpawned = 0;
 		public Dictionary<int, string> Tiles;
 		public Dictionary<string, AbstractBody> Bodies = new Dictionary<string, AbstractBody>();
 		public Dictionary<string, Type> BodyManifests;
@@ -31,7 +31,7 @@ namespace Controllers
 			pi.OnRotateAngleChanged += pm.OnRotateAngleChanged;
 			go.AddComponent<InGamePosition>();
 
-			Game.Instance.Player.InputSuffix = (++PlayersSpawned).ToString();
+			Game.Instance.Player.InputSuffix = (++_playersSpawned).ToString();
 		}
 
 		public GameObject SpawnBody(string name, Vector3 position)
