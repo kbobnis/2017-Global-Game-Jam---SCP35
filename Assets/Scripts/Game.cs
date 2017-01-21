@@ -20,11 +20,10 @@ public class Game : MonoBehaviour
 
 	private void Awake()
 	{
-		if(Instance == null)
+		if (Instance == null)
 		{
 			Instance = this;
-		}
-		else
+		} else
 		{
 			Destroy(gameObject);
 		}
@@ -105,10 +104,10 @@ public class Game : MonoBehaviour
 	}
 	public static void Quit()
 	{
-	#if UNITY_EDITOR
+#if UNITY_EDITOR
 		Debug.Break();
-	#else
+#else
 		Application.Quit();
-	#endif
+#endif
 	}
 }

@@ -11,6 +11,7 @@ namespace Controllers
 				"Prisoner0",
 				new Vector3(roomRect.center.x, 0, roomRect.center.y));
 			Game.Instance.Player = go.AddComponent<Player>();
+			Game.Instance.Player.inputSuffix = "1";
 		}
 	}
 }
