@@ -19,7 +19,7 @@ namespace Controllers
 		public Dictionary<string, AbstractBody> Bodies = new Dictionary<string, AbstractBody>();
 		public Dictionary<string, Type> BodyManifests;
 
-		public void SpawnPlayer(int x, int y)
+		public GameObject SpawnPlayer(int x, int y)
 		{
 			Rect roomRect = Game.Instance.LevelManager.GetRoomRect(1, 1);
 			GameObject go = SpawnBody("Prisoner0", new Vector3(roomRect.center.x, 0, roomRect.center.y));
@@ -31,6 +31,7 @@ namespace Controllers
 			go.AddComponent<InGamePosition>();
 
 			Game.Instance.Player.InputSuffix = (++_playersSpawned).ToString();
+			return go;
 		}
 
 		public GameObject SpawnBody(string name, Vector3 position)
@@ -53,11 +54,13 @@ namespace Controllers
 			BodyComponent bodyComponent = go.GetComponent<BodyComponent>() ?? go.AddComponent<BodyComponent>();
 			go.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
 			bodyComponent.Body = Bodies[name];
+			bodyComponent.Body.Init(bodyComponent);
+
 			return go;
 		}
-		public void SpawnTile(int index, Vector3 position, Rotation rotation, Transform parent)
+		public GameObject SpawnTile(int index, Vector3 position, Rotation rotation, Transform parent)
 		{
-			UnityEngine.Object.Instantiate(
+			return UnityEngine.Object.Instantiate(
 				Resources.Load<GameObject>("data/tiles/" + Tiles[index]),
 				position,
 				rotation.ToQuaternion(),

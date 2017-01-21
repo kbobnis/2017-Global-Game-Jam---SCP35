@@ -107,6 +107,10 @@ namespace Characters.Abstract
 			IsPlayerControlled = false;
 		}
 
+		public void GoTo(Vector3 position) {
+			NavMeshAgent.destination = position;
+		}
+
 		/// <summary>
 		/// Attack with your weapon and try to damage bodies
 		/// in your range
