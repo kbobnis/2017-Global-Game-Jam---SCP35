@@ -103,6 +103,7 @@ namespace Characters.Abstract
 			Collider = parent.GetComponent<Collider>();
 			Rigidbody = parent.GetComponent<Rigidbody>();
 			NavMeshAgent = parent.GetComponent<NavMeshAgent>();
+			NavMeshAgent.velocity = new Vector3(Speed, 0, Speed);
 
 			IsPlayerControlled = false;
 		}
