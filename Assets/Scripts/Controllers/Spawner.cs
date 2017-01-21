@@ -13,8 +13,7 @@ namespace Controllers
 		North, East, South, West
 	}
 
-	public class Spawner
-	{
+	public class Spawner {
 		private int _playersSpawned = 0;
 		public Dictionary<int, string> Tiles;
 		public Dictionary<string, AbstractBody> Bodies = new Dictionary<string, AbstractBody>();

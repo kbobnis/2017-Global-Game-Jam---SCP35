@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Security.Permissions;
+using System.Xml.XPath;
+using Controllers;
 using UnityEngine;
 
 namespace Structures
@@ -23,6 +25,9 @@ namespace Structures
 
 		public void Generate(Transform parent)
 		{
+			GameObject floor = new GameObject();
+			floor.transform.SetParent(parent);
+
  			int i = 0;
 			foreach(int[] lvlArr in Level)
 			{
