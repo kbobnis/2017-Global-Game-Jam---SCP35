@@ -5,8 +5,8 @@ public class RoomModel {
 	public const int Height = 9;
 	public const int Width = 16;
 
-	public static readonly RoomModel Corridor = new RoomModel("data/levels/Corridor0");
-	public static readonly RoomModel Room0 = new RoomModel("data/levels/Start0");
+	public static readonly RoomModel Corridor = new RoomModel("levels/Corridor0");
+	public static readonly RoomModel Room0 = new RoomModel("levels/Start0");
 
 	public readonly Data RoomData;
 
