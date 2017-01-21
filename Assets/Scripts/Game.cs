@@ -1,4 +1,5 @@
-﻿using Structures;
+﻿using System.Collections;
+using Structures;
 using UnityEngine;
 
 public class Game : MonoBehaviour
@@ -26,30 +27,34 @@ public class Game : MonoBehaviour
 		{
 			Level = new int[][]
 			{
-				new int[] {0, 1, 10},
-				new int[] {0, 3, 4, 5},
-				new int[] {0, 10},
-				new int[] {0, 4, 6},
-				new int[] {0, 7, 1, 3, 2},
-				new int[] {0, 5, 8, 9, 10, 4, 2}
+				new int[] {0, 3, 5},
+				new int[] {0, 6},
+				new int[] {0, 7, 3, 5},
+				new int[] {0, 1, 6},
+				new int[] {0, 7, 8},
+				new int[] {0, 9, 10, 4, 2}
 			},
 			RoomNames = new string[]
 			{
-				"data/level/Corridor0.json",
-				"data/level/Start0.json",
-				"data/level/Boss0.json",
-				"data/level/Room0.json",
-				"data/level/Room1.json",
-				"data/level/Room2.json",
-				"data/level/Room3.json",
-				"data/level/Room4.json",
-				"data/level/Room5.json",
-				"data/level/Room6.json",
-				"data/level/Room7.json"
+				"data/levels/Corridor0", // 0
+				"data/levels/Start0",    // 1
+				"data/levels/Boss0",     // 2
+				"data/levels/Room0",     // 3
+				"data/levels/Room1",     // 4
+				"data/levels/Room2",     // 5
+				"data/levels/Room3",     // 6
+				"data/levels/Room4",     // 7
+				"data/levels/Room5",     // 8
+				"data/levels/Room6",     // 9
+				"data/levels/Room7"      // 10
 			}
 		};
 		GameObject go = new GameObject("Level");
 		Data.Generate(go.transform);
 	}
 
+	public static void StartAsync(IEnumerator coroutine)
+	{
+		Game.Instance.StartCoroutine(coroutine);
+	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,23 +15,47 @@ namespace Structures
 		public int[][] Level;
 		public Dictionary<int, Room> Rooms;
 
+		public LevelData()
+		{
+			Rooms = new Dictionary<int, Room>();
+		}
+
 		public void Generate(Transform parent)
 		{
-			for(int i = 0; i < Width; i++)
+			int i = 0;
+			foreach(int[] lvlArr in Level)
 			{
-				for(int j = 0; j < Height; j++)
+				int j = 0;
+				foreach(int lvl in lvlArr)
 				{
-					GameObject go = new GameObject("Room [" + Width + ", " + Height + "]");
+					GameObject go = new GameObject("Room [" + i + ", " + j + "]");
 					go.transform.SetParent(parent);
-					go.transform.position = new Vector3(i * Width, j * Height);
-					int n = Level[i][j];
-					if(!Rooms.ContainsKey(n))
+					Game.StartAsync(FirstFrameHack(go, new Vector3(j * Width, i * Height)));
+					if(!Rooms.ContainsKey(lvl))
 					{
-						Rooms[n] = JsonUtility.FromJson<Room>(RoomNames[n]);
+						string json = Resources.Load<TextAsset>(RoomNames[lvl]).text;
+						Rooms[lvl] = JsonUtility.FromJson<Room>(json);
 					}
-					Rooms[n].Generate(go.transform);
+					Rooms[lvl].Generate(go.transform);
+					j++;
 				}
+				i++;
 			}
+		}
+
+		/// <summary>
+		/// Ok, so if I won't move go to it's position async
+		/// it stays in place despite changed position in transform
+		/// component. Maybe on Windows this will have different behaviour,
+		/// but I can't test. Must stay this way.
+		/// </summary>
+		/// <param name="go">Game object to move</param>
+		/// <param name="position">Position to move GameObject</param>
+		/// <returns></returns>
+		public IEnumerator FirstFrameHack(GameObject go, Vector3 position)
+		{
+			yield return new WaitForEndOfFrame();
+			go.transform.position = position;
 		}
 	}
 }
