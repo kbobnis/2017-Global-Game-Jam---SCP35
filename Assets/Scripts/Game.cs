@@ -94,7 +94,7 @@ public class Game : MonoBehaviour
 
 		go.Body.GoTo(new Vector3(45, 0, 45));
 
-		Camera.main.gameObject.AddComponent<CameraMan>();
+		Camera.main.gameObject.GetComponent<CameraController>().enabled = true;
 	}
 
 	public static void StartAsync(IEnumerator coroutine)

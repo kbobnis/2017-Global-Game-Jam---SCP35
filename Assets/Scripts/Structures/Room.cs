@@ -47,7 +47,7 @@ namespace Structures
 			floorTransform.SetParent(parent);
 			GameObject fog = Object.Instantiate(
 				Resources.Load<GameObject>(FogOfWarPrefabFilename),
-				new Vector3(Width/2, 1.3f, Height/2),
+				new Vector3(Width/2, 1.75f, Height/2),
 				Quaternion.identity,
 				parent);
 			fog.name = "FogOfWar";
