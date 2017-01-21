@@ -1,11 +1,11 @@
 ﻿using System;
 using UnityEngine;
 
-public class Tile {
-	public static readonly Tile Floor = new Tile(2, "data/tiles/Floor", true);
-	public static readonly Tile Wall = new Tile(3, "data/tiles/Filler1", true);
-	public static readonly Tile Doors = new Tile(4, "data/tiles/Doors0", true);
-	public static readonly Tile Prisoner = new Tile(5, "data/bodies/Prisoner0", false);
+public class TileModel {
+	public static readonly TileModel Floor = new TileModel(2, "data/tiles/Floor", true);
+	public static readonly TileModel Wall = new TileModel(3, "data/tiles/Filler1", true);
+	public static readonly TileModel Doors = new TileModel(4, "data/tiles/Doors0", true);
+	public static readonly TileModel Prisoner = new TileModel(5, "data/bodies/Prisoner0", false);
 
 	internal GameObject Spawn() {
 		GameObject go = GameObject.Instantiate<GameObject>(Prefab);
@@ -16,7 +16,7 @@ public class Tile {
 		return go;
 	}
 
-	public static Tile[] All = new Tile[]{
+	public static TileModel[] All = new TileModel[]{
 		Floor, Wall, Doors, Prisoner
 	};
 
@@ -24,7 +24,7 @@ public class Tile {
 	private readonly int TiledValue;
 	public readonly GameObject Prefab;
 
-	public Tile(int tiledValue, string prefabPath, bool shouldBeKinematic) {
+	public TileModel(int tiledValue, string prefabPath, bool shouldBeKinematic) {
 		ShouldBeKinematic = shouldBeKinematic;
 		TiledValue = tiledValue;
 		Prefab = Resources.Load<GameObject>(prefabPath);
@@ -33,11 +33,11 @@ public class Tile {
 		}
 	}
 
-	internal static Tile FromTiled(int v) {
+	internal static TileModel FromTiled(int v) {
 		if (v == 0) {
 			return null;
 		}
-		foreach (Tile t in All) {
+		foreach (TileModel t in All) {
 			if (t.TiledValue == v) {
 				return t;
 			}

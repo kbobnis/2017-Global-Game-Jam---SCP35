@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class PlayerInput : MonoBehaviour {
+public class InputController : MonoBehaviour {
 	public string InputSuffix;
 
 	public Action<Vector2> OnMoveAngleChanged;
@@ -11,7 +11,6 @@ public class PlayerInput : MonoBehaviour {
 	void Update() {
 
 		if (MoonzInput.GetKeyDown(MoonzInput.RB, InputSuffix)) {
-			Debug.Log("RB down");
 			if (OnActionClicked != null) {
 				OnActionClicked.Invoke();
 			}

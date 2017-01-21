@@ -1,11 +1,11 @@
 ﻿using System;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerInput), typeof(InGamePosition))]
+[RequireComponent(typeof(InputController), typeof(InGamePosition))]
 public class PlayerActionHandler : MonoBehaviour {
 
 	internal void Init(int playerNumber) {
-		PlayerInput pi = GetComponent<PlayerInput>() ?? gameObject.AddComponent<PlayerInput>();
+		InputController pi = GetComponent<InputController>() ?? gameObject.AddComponent<InputController>();
 		pi.InputSuffix = playerNumber.ToString();
 		pi.OnActionClicked += OnActionClicked;
 		pi.OnMoveAngleChanged += OnMoveAngleChanged;

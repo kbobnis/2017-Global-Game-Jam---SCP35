@@ -1,12 +1,12 @@
 ﻿using System;
 using UnityEngine;
 
-public class Room {
+public class RoomModel {
 	public const int Height = 9;
 	public const int Width = 16;
 
-	public static readonly Room Corridor = new Room("data/levels/Corridor0");
-	public static readonly Room Room0 = new Room("data/levels/Start0");
+	public static readonly RoomModel Corridor = new RoomModel("data/levels/Corridor0");
+	public static readonly RoomModel Room0 = new RoomModel("data/levels/Start0");
 
 	public readonly Data RoomData;
 
@@ -25,7 +25,7 @@ public class Room {
 		}
 	}
 
-	public Room(string roomJsonPath) {
+	public RoomModel(string roomJsonPath) {
 		RoomData = JsonUtility.FromJson<Data>(Resources.Load<TextAsset>(roomJsonPath).text);
 
 		if (RoomData == null) {
@@ -40,7 +40,7 @@ public class Room {
 		elements.transform.SetParent(room.transform);
 		for (int i = 0; i < Width; i++) {
 			for (int j = 0; j < Height; j++) {
-				Tile tile = Tile.FromTiled(RoomData.GetTileAt(i, j));
+				TileModel tile = TileModel.FromTiled(RoomData.GetTileAt(i, j));
 				if (tile != null) {
 					GameObject tileGO = tile.Spawn();
 					tileGO.transform.SetParent(elements.transform);
@@ -54,7 +54,7 @@ public class Room {
 
 		for (int i = 0; i < Width; i++) {
 			for (int j = 0; j < Height; j++) {
-				Tile tile = Tile.Floor;
+				TileModel tile = TileModel.Floor;
 				GameObject tileGO = tile.Spawn();
 				tileGO.transform.SetParent(floor.transform);
 				tileGO.transform.position = new Vector3(i, -1, j);
