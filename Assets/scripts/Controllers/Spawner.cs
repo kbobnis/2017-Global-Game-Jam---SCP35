@@ -1,10 +1,19 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
+using Utilities;
 
 namespace Controllers
 {
+
+	public enum Rotation
+	{
+		North, East, South, West
+	}
+
 	public class Spawner
 	{
 		private int PlayersSpawned = 0;
+		public Dictionary<int, string> Tiles;
 
 		public void SpawnPlayer(int x, int y)
 		{
@@ -21,5 +30,15 @@ namespace Controllers
 
 			Game.Instance.Player.InputSuffix = (++PlayersSpawned).ToString();
 		}
+
+		public void SpawnTile(int index, Vector3 position, Rotation rotation, Transform parent)
+		{
+			UnityEngine.Object.Instantiate(
+				Resources.Load<GameObject>("data/tiles/" + Tiles[index]),
+				position,
+				rotation.ToQuaternion(),
+				parent);
+		}
+
 	}
 }
