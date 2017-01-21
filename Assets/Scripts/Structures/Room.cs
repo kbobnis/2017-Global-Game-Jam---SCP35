@@ -42,6 +42,9 @@ namespace Structures
 			GameObject room = new GameObject("RoomObjects");
 			Transform roomTransform = room.transform;
 			roomTransform.SetParent(parent);
+			GameObject floor = new GameObject("Floor");
+			Transform floorTransform = floor.transform;
+			floorTransform.SetParent(parent);
 
 			for(int i = 0; i < Width; i++)
 			{
@@ -51,6 +54,9 @@ namespace Structures
 					if(n > 0)
 					{
 						Game.Instance.Spawner.SpawnTile(n-1, new Vector3(i, 0, j), Rotation.North, roomTransform);
+					}
+					{
+						Game.Instance.Spawner.SpawnTile(-1, new Vector3(i, -1, j), Rotation.North, floorTransform);
 					}
 				}
 			}
