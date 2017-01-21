@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
-public class MoonzInput
-{
+public class MoonzInput {
 	public const string ARROW_LEFT = "arrow_left";
 	public const string ARROW_RIGHT = "arrow_right";
 	public const string ARROW_UP = "arrow_up";
@@ -18,43 +17,34 @@ public class MoonzInput
 
 	public static string mode = MoonzInput.INPUT_MANAGER_MODE;
 
-	public static bool GetKeyDown(string keyCode, string inputSuffix)
-	{
-		if (mode == DEFAULT_MODE)
-		{
-			switch (keyCode)
-			{
-				case ARROW_LEFT:
-					{
+	public static bool GetKeyDown(string keyCode, string inputSuffix) {
+		if (mode == DEFAULT_MODE) {
+			switch (keyCode) {
+				case ARROW_LEFT: {
 						return Input.GetKeyDown("joystick " + inputSuffix + " button 7") ||
 							(Input.GetKeyDown(KeyCode.LeftArrow) && Input.GetKey(KeyCode.LeftShift)) ||
 							Input.GetAxis("ChooseItemX" + inputSuffix) == -1;
 					}
-				case ARROW_RIGHT:
-					{
+				case ARROW_RIGHT: {
 						return Input.GetKeyDown("joystick " + inputSuffix + " button 5") ||
 							Input.GetKeyDown(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftShift) ||
 							Input.GetAxis("ChooseItemX" + inputSuffix) == 1;
 					}
-				case ARROW_DOWN:
-					{
+				case ARROW_DOWN: {
 						return Input.GetKeyDown("joystick " + inputSuffix + " button 6") ||
 							(Input.GetKeyDown(KeyCode.DownArrow) && Input.GetKey(KeyCode.LeftShift)) ||
 							Input.GetAxis("ChooseItemY" + inputSuffix) == -1;
 						;
 					}
-				case B:
-					{
+				case B: {
 						return Input.GetKeyDown("joystick " + inputSuffix + " button 12") || Input.GetKeyDown("joystick " + inputSuffix + " button 3") ||
 						Input.GetKeyDown("joystick " + inputSuffix + " button 1") // to jest B na win 
 						;
 					}
-				case A:
-					{
+				case A: {
 						return Input.GetKeyDown("joystick " + inputSuffix + " button 0");
 					}
-				case START:
-					{
+				case START: {
 						return Input.GetKeyDown("joystick " + inputSuffix + " button 7");
 					}
 				case RB:
@@ -63,10 +53,8 @@ public class MoonzInput
 					throw new System.Exception("There is no keyCode assigned to " + keyCode);
 			}
 			if (keyCode == MoonzInput.X) return Input.GetKeyDown("joystick " + inputSuffix + " button 2");
-		} else if (mode == INPUT_MANAGER_MODE)
-		{
-			switch (keyCode)
-			{
+		} else if (mode == INPUT_MANAGER_MODE) {
+			switch (keyCode) {
 				case ARROW_LEFT: return Input.GetButtonDown("ArrowLeft" + inputSuffix);
 				case ARROW_UP: return Input.GetButtonDown("ArrowUp" + inputSuffix);
 				case ARROW_RIGHT: return Input.GetButtonDown("ArrowRight" + inputSuffix);
@@ -98,21 +86,16 @@ public class MoonzInput
 		return false;
 	}
 
-	public static float GetAxis(string axis, string inputSuffix)
-	{
-		if (mode == DEFAULT_MODE)
-		{
-			switch (axis)
-			{
+	public static float GetAxis(string axis, string inputSuffix) {
+		if (mode == DEFAULT_MODE) {
+			switch (axis) {
 				case "V": return Input.GetAxis("V" + inputSuffix);
 				case "H": return Input.GetAxis("H" + inputSuffix);
 				case "FV": return Input.GetAxis("FV" + inputSuffix);
 				case "FH": return Input.GetAxis("FH" + inputSuffix);
 			}
-		} else if (mode == INPUT_MANAGER_MODE)
-		{
-			switch (axis)
-			{
+		} else if (mode == INPUT_MANAGER_MODE) {
+			switch (axis) {
 				case "V": return Input.GetAxis("VerticalMoveAxis" + inputSuffix);
 				case "H": return Input.GetAxis("HorizontalMoveAxis" + inputSuffix);
 				case "FV": return Input.GetAxis("VerticalFireAxis" + inputSuffix);
@@ -121,8 +104,7 @@ public class MoonzInput
 				default:
 					throw new System.Exception("There is no axis defined: " + axis);
 			}
-		} else
-		{
+		} else {
 			if (axis == "FV") return Input.GetAxis("MacFV");
 			if (axis == "FH") return Input.GetAxis("MacFH");
 			return Input.GetAxis(axis + "1");
