@@ -16,7 +16,7 @@ public class Game : MonoBehaviour
 	public TileManager TileManager { get; private set; }
 	public PlayerManager PlayerManager { get; private set; }
 
-	public Player Player;
+	public PlayerInput Player;
 
 	private void Awake()
 	{
@@ -95,6 +95,7 @@ public class Game : MonoBehaviour
 	{
 		yield return new WaitForSeconds(0.2f);
 		PlayerManager.SpawnPlayer(1, 0);
+		PlayerManager.SpawnPlayer(1, 1);
 		Camera.main.gameObject.AddComponent<CameraMan>();
 	}
 

@@ -1,43 +1,59 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
+using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerInput : MonoBehaviour
 {
-	public string inputSuffix;
+	public string InputSuffix;
+
+	public Action<Vector2> OnMoveAngleChanged;
+	public Action<Vector2> OnRotateAngleChanged;
+	public Action OnActionClicked;
+
+	private float? GetAngle(float h, float v)
+	{
+		float? angle = null;
+		if (Mathf.Abs(h) + Mathf.Abs(v) > 0.5f)
+		{
+			angle = Mathf.Atan2(h, v);
+			if (angle < 0)
+			{
+				angle = angle + 2 * Mathf.PI;
+			}
+			angle /= 2 * Mathf.PI;
+		}
+		return angle;
+	}
 
 	void Update()
 	{
 
-		if (MoonzInput.GetKeyDown(MoonzInput.RB, inputSuffix)) 
+		if (MoonzInput.GetKeyDown(MoonzInput.RB, InputSuffix))
 		{
 			Debug.Log("RB ");
+			if (OnActionClicked != null)
+			{
+				OnActionClicked.Invoke();
+			}
 		}
 
-		float h = MoonzInput.GetAxis("H", inputSuffix);
-		float v = MoonzInput.GetAxis("V", inputSuffix);
-
-		float angle;
-		if (Mathf.Abs(h) + Mathf.Abs(v) > 0.5f)
+		Vector2 angle = new Vector2(MoonzInput.GetAxis("H", InputSuffix), MoonzInput.GetAxis("V", InputSuffix));
+		if (Mathf.Abs(angle.x) + Mathf.Abs(angle.y) > 0.5f)
 		{
-			angle = Mathf.Atan2(h, v);
-			Quaternion rotation = Quaternion.Euler(0, angle * 180 / Mathf.PI, 0);
-			Debug.Log("Angle " + angle + " rotation: " + rotation);
+			Debug.Log("Angle " + angle);
+			if (OnMoveAngleChanged != null)
+			{
+				OnMoveAngleChanged.Invoke(angle);
+			}
 		}
 
-		float fh = MoonzInput.GetAxis("FH", inputSuffix);
-		float fv = MoonzInput.GetAxis("FV", inputSuffix);
-		angle = Mathf.Atan2(fh, fv);
-
-		if (Mathf.Abs(fh) + Mathf.Abs(fv) > 0.5)
+		Vector2 angle2 = new Vector2(MoonzInput.GetAxis("FH", InputSuffix), MoonzInput.GetAxis("FV", InputSuffix));
+		if (Mathf.Abs(angle2.x) + Mathf.Abs(angle2.y) > 0.5f)
 		{
-			Vector3 shootDirection = Camera.main.transform.up * fv + Camera.main.transform.right * fh;
-			Quaternion rotation = Quaternion.Euler(0, angle * 180 / Mathf.PI, 0);
-			Debug.Log("direction " + shootDirection + ", rotation: " + rotation);
-		}
-
-		if (MoonzInput.GetKeyDown(MoonzInput.RB, inputSuffix) || MoonzInput.GetKeyDown(MoonzInput.X, inputSuffix))
-		{
-			Debug.Log("RB");
+			Debug.Log("angle2: " + angle2);
+			if (OnRotateAngleChanged != null)
+			{
+				OnRotateAngleChanged.Invoke(angle2);
+			}
 		}
 	}
 }

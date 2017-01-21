@@ -7,7 +7,7 @@ namespace Utilities
 {
 	public static class PlayerExtension
 	{
-		public static Rect GetCurrentRoomRect(this Player player)
+		public static Rect GetCurrentRoomRect(this PlayerInput player)
 		{
 			Vector2 position = player.transform.position;
 			return new Rect(
@@ -17,7 +17,7 @@ namespace Utilities
 				LevelManager.Height);
 		}
 
-		public static GameObject GetCurrentRoomObject(this Player player)
+		public static GameObject GetCurrentRoomObject(this PlayerInput player)
 		{
 			Vector2 position = player.transform.position;
 			int x = Mathf.FloorToInt(position.x / LevelManager.Width);
