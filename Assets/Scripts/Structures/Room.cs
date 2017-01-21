@@ -33,6 +33,8 @@ namespace Structures
 		public const int Height = 9;
 		public const int Width = 16;
 
+		public const string FogOfWarPrefabFilename = "data/other/FogOfWar";
+
 		public Layer[] layers;
 
 		public void Generate(Transform parent)
@@ -43,6 +45,12 @@ namespace Structures
 			GameObject floor = new GameObject("Floor");
 			Transform floorTransform = floor.transform;
 			floorTransform.SetParent(parent);
+			GameObject fog = Object.Instantiate(
+				Resources.Load<GameObject>(FogOfWarPrefabFilename),
+				new Vector3(Width/2, 1.3f, Height/2),
+				Quaternion.identity,
+				parent);
+			fog.name = "FogOfWar";
 
 			for(int i = 0; i < Width; i++)
 			{

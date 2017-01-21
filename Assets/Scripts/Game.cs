@@ -89,7 +89,7 @@ public class Game : MonoBehaviour
 	{
 		yield return new WaitForSeconds(0.2f);
 		Spawner.SpawnPlayer(1, 0);
-		Spawner.SpawnPlayer(1, 1);
+		Spawner.SpawnPlayer(1, 0);
 		BodyComponent go = Spawner.SpawnBody("Prisoner0", new Vector3(10, 0, 3)).GetComponent<BodyComponent>();
 
 		go.Body.GoTo(new Vector3(45, 0, 45));
