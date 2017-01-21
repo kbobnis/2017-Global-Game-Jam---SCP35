@@ -60,6 +60,14 @@ namespace Structures
 			return new Rect(GetRoomAt(x, y).transform.position, new Vector2(Width, Height));
 		}
 
+		public void OnRoomEnter(int x, int y) {
+			GetRoomAt(x,y).transform.FindChild("FogOfWar").gameObject.SetActive(false);
+		}
+
+		public void OnRoomExit(int x, int y) {
+			GetRoomAt(x,y).transform.FindChild("FogOfWar").gameObject.SetActive(true);
+		}
+
 		/// <summary>
 		/// Ok, so if I won't move GameObject to it's position async
 		/// it stays in place despite changed position in transform

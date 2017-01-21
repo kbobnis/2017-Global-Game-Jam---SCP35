@@ -24,13 +24,16 @@ namespace Controllers
 			Rect roomRect = Game.Instance.LevelManager.GetRoomRect(1, 1);
 			GameObject go = SpawnBody("Prisoner0", new Vector3(roomRect.center.x, 0, roomRect.center.y));
 			PlayerInput pi = Game.Instance.Player = go.AddComponent<PlayerInput>();
-			PlayerActionHandler pm = go.AddComponent<PlayerActionHandler>();
+			PlayerController pm = go.AddComponent<PlayerController>();
 			pi.OnActionClicked += pm.OnActionClicked;
 			pi.OnMoveAngleChanged += pm.OnMoveAngleChanged;
 			pi.OnRotateAngleChanged += pm.OnRotateAngleChanged;
+			pm.OnPlayerRoomEnter += Game.Instance.LevelManager.OnRoomEnter;
+			pm.OnPlayerRoomExit += Game.Instance.LevelManager.OnRoomExit;
 			go.AddComponent<InGamePosition>();
 
 			Game.Instance.Player.InputSuffix = (++_playersSpawned).ToString();
+			pm.PlayerRoomEnter(x, y);
 			return go;
 		}
 
