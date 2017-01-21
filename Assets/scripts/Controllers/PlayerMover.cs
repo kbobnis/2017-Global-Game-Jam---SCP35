@@ -17,3 +17,4 @@ public class PlayerActionHandler : MonoBehaviour
 		GetComponent<InGamePosition>().SetRotation(angle);
 	}
 }
+
