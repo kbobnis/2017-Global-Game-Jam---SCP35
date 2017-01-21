@@ -2,7 +2,7 @@
 
 namespace Controllers
 {
-	public class PlayerManager
+	public class Spawner
 	{
 		private int PlayersSpawned = 0;
 
