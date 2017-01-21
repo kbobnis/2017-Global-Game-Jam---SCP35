@@ -2,14 +2,14 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Characters
+namespace Characters.Abstract
 {
 
 	[Serializable]
 	public enum BehaviourMode
 	{
-		Runner,
-		Chaser
+		Runner = 0,
+		Chaser = 1
 	}
 
 	[Serializable]
@@ -25,21 +25,16 @@ namespace Characters
 	}
 
 	[Serializable]
-	public struct Anim
-	{
-		public Animation Walk;
-		public Animation Attack;
-	}
-
-	[RequireComponent(typeof(NavMeshAgent), typeof(Rigidbody), typeof(Collider))]
-	public abstract class AbstractBody : MonoBehaviour
+	public abstract class AbstractBody
 	{
 		public float Hp;
 		public float Speed;
 		public Behaviour Behaviour;
-		public Anim Anim;
 
 		protected float AttackCooldown;
+
+		protected BodyComponent Parent;
+		protected GameObject GameObject;
 
 		protected NavMeshAgent NavMeshAgent;
 		protected Rigidbody Rigidbody;
@@ -54,17 +49,6 @@ namespace Characters
 				_isPlayerControlled = value;
 				NavMeshAgent.enabled = !value;
 			}
-		}
-
-		public void Start()
-		{
-			Collider = GetComponent<Collider>();
-			Rigidbody = GetComponent<Rigidbody>();
-			NavMeshAgent = GetComponent<NavMeshAgent>();
-
-			IsPlayerControlled = false;
-
-			Init();
 		}
 
 		/// <summary>
@@ -86,7 +70,7 @@ namespace Characters
 		/// </summary>
 		public virtual void Die()
 		{
-			Destroy(gameObject);
+
 			if(IsPlayerControlled)
 			{
 				// TODO: Do something if player was controlling this character.
@@ -108,9 +92,19 @@ namespace Characters
 		}
 
 		/// <summary>
-		/// Init components etc.. Called by superclass in Start().
+		/// Init components etc...
 		/// </summary>
-		public abstract void Init();
+		///
+		public virtual void Init(BodyComponent parent)
+		{
+			Parent = parent;
+			GameObject = parent.gameObject;
+			Collider = parent.GetComponent<Collider>();
+			Rigidbody = parent.GetComponent<Rigidbody>();
+			NavMeshAgent = parent.GetComponent<NavMeshAgent>();
+
+			IsPlayerControlled = false;
+		}
 
 		/// <summary>
 		/// Attack with your weapon and try to damage bodies
@@ -123,5 +117,10 @@ namespace Characters
 		/// Fire a deathrattle
 		/// </summary>
 		public abstract void Deathrattle();
+
+		public override string ToString()
+		{
+			return JsonUtility.ToJson(this, true);
+		}
 	}
 }

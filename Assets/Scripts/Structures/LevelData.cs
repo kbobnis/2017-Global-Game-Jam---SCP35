@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Structures
 {
-	[Serializable]
 	public class LevelData
 	{
 		public const int Width = 16;
 		public const int Height = 9;
 
-		public string[] RoomNames;
+		public string[] RoomFilenames;
 		public int[][] Level;
 		public Dictionary<int, Room> Rooms;
 
@@ -33,7 +31,7 @@ namespace Structures
 					Game.StartAsync(FirstFrameHack(go, new Vector3(j * Width, i * Height)));
 					if(!Rooms.ContainsKey(lvl))
 					{
-						string json = Resources.Load<TextAsset>(RoomNames[lvl]).text;
+						string json = Resources.Load<TextAsset>(RoomFilenames[lvl]).text;
 						Rooms[lvl] = JsonUtility.FromJson<Room>(json);
 					}
 					Rooms[lvl].Generate(go.transform);
@@ -44,10 +42,10 @@ namespace Structures
 		}
 
 		/// <summary>
-		/// Ok, so if I won't move go to it's position async
+		/// Ok, so if I won't move GameObject to it's position async
 		/// it stays in place despite changed position in transform
 		/// component. Maybe on Windows this will have different behaviour,
-		/// but I can't test. Must stay this way.
+		/// but I can't test it. Must stay this way.
 		/// </summary>
 		/// <param name="go">Game object to move</param>
 		/// <param name="position">Position to move GameObject</param>

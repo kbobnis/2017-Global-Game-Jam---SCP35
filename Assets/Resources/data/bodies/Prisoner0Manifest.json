@@ -1,0 +1,20 @@
+{
+	"Attack": {
+		"Strength": 1.0,
+		"Width": 0.4,
+		"MinRange": 0.0,
+		"MaxRange": 0.5,
+		"Delay": 0.3,
+		"Cooldown": 0.8,
+		"SwingTime": 0.4
+	},
+	"Hp": 2.5,
+	"Speed": 1.7,
+	"Behaviour": {
+		"Mode": 0,
+		"Range": 4.0,
+		"Angle": 120.0,
+		"SeeThroughObstacles": false,
+		"ChaseThroughDoors": false
+	}	
+}

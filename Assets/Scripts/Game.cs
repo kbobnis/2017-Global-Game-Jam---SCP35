@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Characters;
+using Characters.Concrete;
 using Structures;
 using UnityEngine;
 
@@ -38,7 +41,7 @@ public class Game : MonoBehaviour
 				new int[] {0, 7, 8},
 				new int[] {0, 9, 10, 4, 2}
 			},
-			RoomNames = new string[]
+			RoomFilenames = new string[]
 			{
 				"data/levels/Corridor0", // 0
 				"data/levels/Start0",    // 1
@@ -55,8 +58,14 @@ public class Game : MonoBehaviour
 		};
 		GameObject go = new GameObject("Level");
 		LevelData.Generate(go.transform);
-		BodyData = new BodyData();
-
+		BodyData = new BodyData
+		{
+			BodyManifests = new Dictionary<string, Type>()
+			{
+				{"Prisoner0", typeof(Prisoner)}
+			}
+		};
+		BodyData.SpawnBody("Prisoner0", new Vector3(0, 0, 3));
 	}
 
 	public static void StartAsync(IEnumerator coroutine)

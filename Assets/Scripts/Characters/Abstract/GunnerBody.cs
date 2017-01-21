@@ -1,7 +1,8 @@
 ﻿using System;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
-namespace Characters
+namespace Characters.Abstract
 {
 	[Serializable]
 	public class RangedAttack
@@ -25,6 +26,7 @@ namespace Characters
 		public int Bullet;
 	}
 
+	[Serializable]
 	public abstract class GunnerBody : AbstractBody
 	{
 		public const string BulletHoleGOName = "BulletHole";
@@ -34,9 +36,10 @@ namespace Characters
 		protected Transform Transfrom;
 		protected Transform BulletHole;
 
-		public override void Init()
+		public override void Init(BodyComponent parent)
 		{
-			Transfrom = transform;
+			base.Init(parent);
+			Transfrom = parent.transform;
 			BulletHole = Transfrom.FindChild(BulletHoleGOName);
 			if(BulletHole == null)
 			{
@@ -59,7 +62,7 @@ namespace Characters
 		{
 			float lookAngle = Transfrom.eulerAngles.z;
 			Vector3 bulletForce = Quaternion.AngleAxis(lookAngle, Vector3.forward) * Vector3.right * Attack.Speed;
-			GameObject bullet = Instantiate(
+			GameObject bullet = Object.Instantiate(
 				Game.Instance.Bullets[Attack.Bullet],
 				BulletHole.position,
 				Quaternion.identity);
@@ -75,6 +78,11 @@ namespace Characters
 		protected void Update()
 		{
 			AttackCooldown += Time.deltaTime;
+		}
+
+		public override string ToString()
+		{
+			return JsonUtility.ToJson(this, true);
 		}
 	}
 }

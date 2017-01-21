@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Characters
+namespace Characters.Abstract
 {
 	[Serializable]
 	public class MeleeAttack
@@ -48,14 +48,16 @@ namespace Characters
 		public Collider Collider;
 	}
 
+	[Serializable]
 	public abstract class MeleeBody : AbstractBody
 	{
 		public MeleeAttack Attack;
 
-		public override void Init()
+		public override void Init(BodyComponent parent)
 		{
+			base.Init(parent);
 			float range = Attack.MaxRange - Attack.MinRange;
-			BoxCollider boxCollider = gameObject.AddComponent<BoxCollider>();
+			BoxCollider boxCollider = GameObject.AddComponent<BoxCollider>();
 			boxCollider.center = new Vector3(0, range + 0.5f);
 			boxCollider.size = new Vector3(Attack.Width, range);
 			boxCollider.enabled = false;
@@ -66,7 +68,7 @@ namespace Characters
 		{
 			if(AttackCooldown > Attack.Cooldown)
 			{
-				StartCoroutine(AttackAfterDelay());
+				Game.StartAsync(AttackAfterDelay());
 				AttackCooldown = 0.0f;
 			}
 		}
@@ -82,6 +84,11 @@ namespace Characters
 		protected void Update()
 		{
 			AttackCooldown += Time.deltaTime;
+		}
+
+		public override string ToString()
+		{
+			return JsonUtility.ToJson(this, true);
 		}
 	}
 }
