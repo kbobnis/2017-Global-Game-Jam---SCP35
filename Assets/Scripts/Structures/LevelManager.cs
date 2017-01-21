@@ -31,7 +31,7 @@ namespace Structures
 				{
 					GameObject go = new GameObject("Room [" + j + ", " + i + "]");
 					go.transform.SetParent(parent);
-					Game.StartAsync(FirstFrameHack(go, new Vector3(j * Width, i * Height)));
+					Game.StartAsync(FirstFrameHack(go, new Vector3(j * Width, 0,  i * Height)));
 					if(!Rooms.ContainsKey(lvl))
 					{
 						string json = Resources.Load<TextAsset>(RoomFilenames[lvl]).text;
