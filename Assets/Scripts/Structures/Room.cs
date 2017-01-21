@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Controllers;
+using System;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -52,10 +53,10 @@ namespace Structures
 					int n = layers[0].data[i + j * Width];
 					if(n > 0)
 					{
-						Game.Instance.TileManager.SpawnTile(n-1, new Vector3(i, 0, j), Rotation.North, roomTransform);
+						Game.Instance.Spawner.SpawnTile(n-1, new Vector3(i, 0, j), Rotation.North, roomTransform);
 					}
 					{
-						Game.Instance.TileManager.SpawnTile(-1, new Vector3(i, -1, j), Rotation.North, floorTransform);
+						Game.Instance.Spawner.SpawnTile(-1, new Vector3(i, -1, j), Rotation.North, floorTransform);
 					}
 				}
 			}
