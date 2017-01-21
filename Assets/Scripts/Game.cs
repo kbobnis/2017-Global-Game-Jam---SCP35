@@ -55,13 +55,6 @@ public class Game : MonoBehaviour
 				"data/levels/Room7"      // 10
 			}
 		};
-		BodyManager = new BodyManager
-		{
-			BodyManifests = new Dictionary<string, Type>()
-			{
-				{"Prisoner0", typeof(Prisoner)}
-			}
-		};
 		Spawner = new Spawner()
 		{
 			Tiles = new Dictionary<int, string>()
@@ -76,6 +69,10 @@ public class Game : MonoBehaviour
 				{6, "Cabinet1"},
 				{7, "Cabinet2"},
 				{8, "Doors0"}
+			},
+			BodyManifests = new Dictionary<string, Type>()
+			{
+				{"Prisoner0", typeof(Prisoner)}
 			}
 		};
 		GameObject go = new GameObject("Level");
