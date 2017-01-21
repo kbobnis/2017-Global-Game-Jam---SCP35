@@ -8,6 +8,7 @@ public class Game : MonoBehaviour
 
 	public LevelData Data { get; private set; }
 	public GameObject[] Tiles;
+	public GameObject Floor;
 
 	private void Awake()
 	{
