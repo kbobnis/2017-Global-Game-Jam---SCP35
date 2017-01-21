@@ -48,8 +48,9 @@ namespace Characters.Abstract
 			if(BulletHole == null)
 			{
 				Game.Quit();
-				throw new Exception("GunnerBody has no 'BulletHole' object attached to it's gun!" +
-				                    " It will not be able to fire bullets!");
+				throw new Exception(
+					"GunnerBody has no 'BulletHole' object attached to it's gun!"
+					+ " It will not be able to fire bullets!");
 			}
 		}
 

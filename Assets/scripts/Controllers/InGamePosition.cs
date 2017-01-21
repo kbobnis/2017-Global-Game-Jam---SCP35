@@ -16,3 +16,4 @@ public class InGamePosition : MonoBehaviour
 		transform.rotation = Quaternion.Euler(0, angle * 180 / Mathf.PI, 0);
 	}
 }
+

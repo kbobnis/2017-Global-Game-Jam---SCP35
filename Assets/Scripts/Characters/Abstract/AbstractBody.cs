@@ -27,7 +27,6 @@ namespace Characters.Abstract
 	[Serializable]
 	public abstract class AbstractBody
 	{
-		public float Hp;
 		public float Speed;
 		public Behaviour Behaviour;
 
@@ -50,6 +49,8 @@ namespace Characters.Abstract
 				NavMeshAgent.enabled = !value;
 			}
 		}
+
+		public int Hp { get; private set; }
 
 		/// <summary>
 		/// Take control of body.

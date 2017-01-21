@@ -30,6 +30,7 @@ namespace Controllers
 			pi.OnMoveAngleChanged += pm.OnMoveAngleChanged;
 			pi.OnRotateAngleChanged += pm.OnRotateAngleChanged;
 			go.AddComponent<InGamePosition>();
+
 			Game.Instance.Player.InputSuffix = (++PlayersSpawned).ToString();
 		}
 
