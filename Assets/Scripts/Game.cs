@@ -12,7 +12,6 @@ public class Game : MonoBehaviour
 	public static Game Instance;
 
 	public LevelManager LevelManager { get; private set; }
-	public BodyManager BodyManager { get; private set; }
 	public Spawner Spawner { get; private set; }
 
 	public PlayerInput Player;
@@ -94,7 +93,6 @@ public class Game : MonoBehaviour
 		yield return new WaitForSeconds(0.2f);
 		Spawner.SpawnPlayer(1, 0);
 		Spawner.SpawnPlayer(1, 1);
-
 		Camera.main.gameObject.AddComponent<CameraMan>();
 	}
 
