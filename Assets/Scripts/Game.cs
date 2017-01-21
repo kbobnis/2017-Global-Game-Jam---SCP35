@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Characters;
 using Characters.Concrete;
+using Controllers;
 using Structures;
 using UnityEngine;
 
@@ -10,9 +11,12 @@ public class Game : MonoBehaviour
 {
 	public static Game Instance;
 
-	public LevelData LevelData { get; private set; }
-	public BodyData BodyData { get; private set; }
-	public TilesData TilesData { get; private set; }
+	public LevelManager LevelManager { get; private set; }
+	public BodyManager BodyManager { get; private set; }
+	public TileManager TileManager { get; private set; }
+	public PlayerManager PlayerManager { get; private set; }
+
+	public Player Player;
 
 	private void Awake()
 	{
@@ -28,7 +32,7 @@ public class Game : MonoBehaviour
 
 	public void Start()
 	{
-		LevelData = new LevelData
+		LevelManager = new LevelManager
 		{
 			Level = new int[][]
 			{
@@ -54,14 +58,14 @@ public class Game : MonoBehaviour
 				"data/levels/Room7"      // 10
 			}
 		};
-		BodyData = new BodyData
+		BodyManager = new BodyManager
 		{
 			BodyManifests = new Dictionary<string, Type>()
 			{
 				{"Prisoner0", typeof(Prisoner)}
 			}
 		};
-		TilesData = new TilesData()
+		TileManager = new TileManager()
 		{
 			Tiles = new Dictionary<int, string>()
 			{
@@ -77,9 +81,22 @@ public class Game : MonoBehaviour
 				{8, "Doors0"}
 			}
 		};
+		PlayerManager = new PlayerManager();
 		GameObject go = new GameObject("Level");
-		LevelData.Generate(go.transform);
-		BodyData.SpawnBody("Prisoner0", new Vector3(0, 0, 3));
+		LevelManager.Generate(go.transform);
+		StartCoroutine(SpawnPlayer());
+	}
+
+	/// <summary>
+	/// We need to spawn player async, after rooms have fixated their
+	/// positions. See also: <see cref="LevelManager.FirstFrameHack"/>
+	/// </summary>
+	/// <returns></returns>
+	public IEnumerator SpawnPlayer()
+	{
+		yield return new WaitForSeconds(0.2f);
+		PlayerManager.SpawnPlayer(1, 0);
+		Camera.main.gameObject.AddComponent<CameraMan>();
 	}
 
 	public static void StartAsync(IEnumerator coroutine)

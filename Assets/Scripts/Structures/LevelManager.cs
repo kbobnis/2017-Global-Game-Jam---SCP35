@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Permissions;
 using UnityEngine;
 
 namespace Structures
 {
-	public class LevelData
+	public class LevelManager
 	{
 		public const int Width = 16;
 		public const int Height = 9;
@@ -12,10 +13,12 @@ namespace Structures
 		public string[] RoomFilenames;
 		public int[][] Level;
 		public Dictionary<int, Room> Rooms;
+		public Dictionary<string, GameObject> RoomObjects;
 
-		public LevelData()
+		public LevelManager()
 		{
 			Rooms = new Dictionary<int, Room>();
+			RoomObjects = new Dictionary<string, GameObject>();
 		}
 
 		public void Generate(Transform parent)
@@ -26,7 +29,7 @@ namespace Structures
 				int j = 0;
 				foreach(int lvl in lvlArr)
 				{
-					GameObject go = new GameObject("Room [" + i + ", " + j + "]");
+					GameObject go = new GameObject("Room [" + j + ", " + i + "]");
 					go.transform.SetParent(parent);
 					Game.StartAsync(FirstFrameHack(go, new Vector3(j * Width, i * Height)));
 					if(!Rooms.ContainsKey(lvl))
@@ -35,10 +38,21 @@ namespace Structures
 						Rooms[lvl] = JsonUtility.FromJson<Room>(json);
 					}
 					Rooms[lvl].Generate(go.transform);
+					RoomObjects[j + ":" + i] = go;
 					j++;
 				}
 				i++;
 			}
+		}
+
+		public GameObject GetRoomAt(int x, int y)
+		{
+			return RoomObjects[x + ":" + y];
+		}
+
+		public Rect GetRoomRect(int x, int y)
+		{
+			return new Rect(GetRoomAt(x, y).transform.position, new Vector2(Width, Height));
 		}
 
 		/// <summary>

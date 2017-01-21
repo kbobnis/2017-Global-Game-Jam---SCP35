@@ -52,10 +52,10 @@ namespace Structures
 					int n = layers[0].data[i + j * Width];
 					if(n > 0)
 					{
-						Game.Instance.TilesData.SpawnTile(n-1, new Vector3(i, j), Rotation.North, roomTransform);
+						Game.Instance.TileManager.SpawnTile(n-1, new Vector3(i, j), Rotation.North, roomTransform);
 					}
 					{
-						Game.Instance.TilesData.SpawnTile(-1, new Vector3(i, j, 1), Rotation.North, floorTransform);
+						Game.Instance.TileManager.SpawnTile(-1, new Vector3(i, j, 1), Rotation.North, floorTransform);
 					}
 				}
 			}

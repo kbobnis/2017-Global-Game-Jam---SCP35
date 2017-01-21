@@ -9,7 +9,7 @@ namespace Structures
 		North, East, West, South
 	}
 
-	public class TilesData
+	public class TileManager
 	{
 		public Dictionary<int, string> Tiles;
 

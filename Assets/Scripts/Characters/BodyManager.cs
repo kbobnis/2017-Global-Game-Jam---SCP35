@@ -6,17 +6,17 @@ using Object = UnityEngine.Object;
 
 namespace Characters
 {
-	public class BodyData
+	public class BodyManager
 	{
 		public Dictionary<string, AbstractBody> Bodies;
 		public Dictionary<string, Type> BodyManifests;
 
-		public BodyData()
+		public BodyManager()
 		{
 			Bodies = new Dictionary<string, AbstractBody>();
 		}
 
-		public void SpawnBody(string name, Vector3 position)
+		public GameObject SpawnBody(string name, Vector3 position)
 		{
 			string fullName = "data/bodies/" + name;
 			if(!Bodies.ContainsKey(name))
@@ -35,6 +35,7 @@ namespace Characters
 				Quaternion.identity);
 			BodyComponent bodyComponent = go.GetComponent<BodyComponent>() ?? go.AddComponent<BodyComponent>();
 			bodyComponent.Body = Bodies[name];
+			return go;
 		}
 	}
 }
