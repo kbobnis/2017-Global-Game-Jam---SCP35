@@ -4,6 +4,7 @@ using Utilities;
 using System;
 using Characters.Abstract;
 using Characters;
+using Structures;
 
 namespace Controllers
 {
@@ -23,6 +24,8 @@ namespace Controllers
 		{
 			Rect roomRect = Game.Instance.LevelManager.GetRoomRect(1, 1);
 			GameObject go = SpawnBody("Prisoner0", new Vector3(roomRect.center.x, 0, roomRect.center.y));
+			BodyComponent bc = go.GetComponent<BodyComponent>();
+			bc.Body.IsPlayerControlled = true;
 			PlayerInput pi = Game.Instance.Player = go.AddComponent<PlayerInput>();
 			PlayerController pm = go.AddComponent<PlayerController>();
 			pi.OnActionClicked += pm.OnActionClicked;
@@ -30,6 +33,10 @@ namespace Controllers
 			pi.OnRotateAngleChanged += pm.OnRotateAngleChanged;
 			pm.OnPlayerRoomEnter += Game.Instance.LevelManager.OnRoomEnter;
 			pm.OnPlayerRoomExit += Game.Instance.LevelManager.OnRoomExit;
+			pm.OnPlayerRoomEnter += (int xx, int yy) => {
+				bc.Room.X = xx;
+				bc.Room.Y = yy;
+			};
 			go.AddComponent<InGamePosition>();
 
 			Game.Instance.Player.InputSuffix = (++_playersSpawned).ToString();
@@ -37,8 +44,9 @@ namespace Controllers
 			return go;
 		}
 
-		public GameObject SpawnBody(string name, Vector3 position)
-		{
+		public GameObject SpawnBody(string name, Vector3 position) {
+			int x = Mathf.FloorToInt(position.x / LevelManager.Width) * LevelManager.Width;
+			int y = Mathf.FloorToInt(position.y / LevelManager.Height) * LevelManager.Height;
 			string fullName = "data/bodies/" + name;
 			if (!Bodies.ContainsKey(name))
 			{
@@ -58,6 +66,8 @@ namespace Controllers
 			go.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
 			bodyComponent.Body = Bodies[name];
 			bodyComponent.Body.Init(bodyComponent);
+			bodyComponent.Room.X = x;
+			bodyComponent.Room.Y = y;
 
 			return go;
 		}
