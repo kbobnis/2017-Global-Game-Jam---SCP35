@@ -22,7 +22,7 @@ namespace Structures
 
 		public void Generate(Transform parent)
 		{
-			int i = 0;
+ 			int i = 0;
 			foreach(int[] lvlArr in Level)
 			{
 				int j = 0;

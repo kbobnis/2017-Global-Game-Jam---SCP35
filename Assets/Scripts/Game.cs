@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Characters;
 using Structures;
 using UnityEngine;
 
@@ -6,7 +7,8 @@ public class Game : MonoBehaviour
 {
 	public static Game Instance;
 
-	public LevelData Data { get; private set; }
+	public LevelData LevelData { get; private set; }
+	public BodyData BodyData { get; private set; }
 	public GameObject[] Tiles;
 	public GameObject Floor;
 	public GameObject[] Bullets;
@@ -25,7 +27,7 @@ public class Game : MonoBehaviour
 
 	public void Start()
 	{
-		Data = new LevelData
+		LevelData = new LevelData
 		{
 			Level = new int[][]
 			{
@@ -52,7 +54,9 @@ public class Game : MonoBehaviour
 			}
 		};
 		GameObject go = new GameObject("Level");
-		Data.Generate(go.transform);
+		LevelData.Generate(go.transform);
+		BodyData = new BodyData();
+
 	}
 
 	public static void StartAsync(IEnumerator coroutine)

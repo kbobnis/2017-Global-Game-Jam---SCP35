@@ -90,3 +90,4 @@ fabric.properties
 
 # End of https://www.gitignore.io/api/unity,intellij
 .idea/
+Assets/Plugins/Editor/JetBrains/
