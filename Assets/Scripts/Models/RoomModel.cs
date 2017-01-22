@@ -43,7 +43,7 @@ public class RoomModel {
 				TileModel tile = TileModel.FromTiled(RoomData.GetTileAt(i, j));
 				if (tile != null) {
 					GameObject tileGO = tile.Spawn(elements.transform, new Vector3(i, 0, j));
-					if (tile == TileModel.Doors) {
+					if (tile == ObstacleTileModel.Doors) {
 						//tileGO.transform.Rotate()
 					}
 				}
