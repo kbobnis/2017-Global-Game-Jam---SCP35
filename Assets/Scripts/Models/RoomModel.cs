@@ -1,14 +1,30 @@
 ﻿using System;
+using Controllers;
 using UnityEngine;
 
 public class RoomModel {
 	public const int Height = 9;
 	public const int Width = 16;
 
-	public static readonly RoomModel Corridor = new RoomModel("levels/Corridor0");
-	public static readonly RoomModel Room0 = new RoomModel("levels/Start0");
+	public static readonly RoomModel Corridor0 = new RoomModel("levels/Corridor0", "prefabs/floor1");
+	public static readonly RoomModel Corridor1 = new RoomModel("levels/Corridor0", "prefabs/floor");
+	public static readonly RoomModel Room0 = new RoomModel("levels/Start0", "prefabs/floorDefault");
 
 	public readonly Data RoomData;
+	public GameObject FloorPrefab;
+
+	public RoomModel(string roomJsonPath, string floorPrefab) {
+		RoomData = JsonUtility.FromJson<Data>(Resources.Load<TextAsset>(roomJsonPath).text);
+		FloorPrefab = Resources.Load<GameObject>(floorPrefab);
+
+		if (FloorPrefab == null) {
+			throw new Exception("There is no prefab at path: " + floorPrefab);
+		}
+
+		if (RoomData == null) {
+			throw new Exception("There is no prefab at path: " + roomJsonPath);
+		}
+	}
 
 	[Serializable]
 	public class Data {
@@ -25,12 +41,8 @@ public class RoomModel {
 		}
 	}
 
-	public RoomModel(string roomJsonPath) {
-		RoomData = JsonUtility.FromJson<Data>(Resources.Load<TextAsset>(roomJsonPath).text);
-
-		if (RoomData == null) {
-			throw new Exception("There is no prefab at path: " + roomJsonPath);
-		}
+	public enum Side {
+		North, East, South, West
 	}
 
 	public GameObject Generate() {
@@ -43,15 +55,31 @@ public class RoomModel {
 				TileModel tile = TileModel.FromTiled(RoomData.GetTileAt(i, j));
 				if (tile != null) {
 					GameObject tileGO = tile.Spawn(elements.transform, new Vector3(i, 0, j));
+
+					//we will rotate doors by the corners
 					if (tile == ObstacleTileModel.Doors) {
-						//tileGO.transform.Rotate()
+						int angle = 180;
+						if (i == Width - 1) {
+							angle = 0;
+						}
+						if (j == 0) {
+							angle = 90;
+						}
+						if (j == Height - 1) {
+							angle = 270;
+						}
+						Debug.Log("angle: " + angle);
+						//transform.rotation = Quaternion.Euler(0, angle * 180 / Mathf.PI, 0);
+						tileGO.transform.rotation = Quaternion.Euler(0, angle , 0);
+					}
+					if(tile is AgentTileModel) {
+						tileGO.AddComponent<AIController>();
 					}
 				}
 			}
 		}
 
-		//public static readonly TileModel Floor = new TileModel(2, "prefabs/floor", true, false, false);
-		GameObject go = GameObject.Instantiate<GameObject>(Resources.Load<GameObject>("prefabs/floor"));
+		GameObject go = GameObject.Instantiate<GameObject>(FloorPrefab);
 		Rigidbody r = go.AddComponent<Rigidbody>();
 		r.isKinematic = true;
 		go.AddComponent<BoxCollider>();

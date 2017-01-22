@@ -3,10 +3,10 @@
 public class LevelModel {
 
 	public static readonly LevelModel Level1 = new LevelModel(new RoomModel[][] {
-		new RoomModel[] { RoomModel.Corridor, RoomModel.Room0, RoomModel.Room0, RoomModel.Room0},
-		new RoomModel[] { RoomModel.Corridor, RoomModel.Room0, RoomModel.Room0 },
-		new RoomModel[] { RoomModel.Corridor, RoomModel.Room0 },
-		new RoomModel[] { RoomModel.Corridor, RoomModel.Room0 },
+		new RoomModel[] { RoomModel.Corridor0, RoomModel.Room0, RoomModel.Room0, RoomModel.Room0},
+		new RoomModel[] { RoomModel.Corridor1, RoomModel.Room0, RoomModel.Room0 },
+		new RoomModel[] { RoomModel.Corridor1, RoomModel.Room0 },
+		new RoomModel[] { RoomModel.Corridor1, RoomModel.Room0 },
 	});
 
 	public readonly RoomModel[][] Rooms;

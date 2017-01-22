@@ -15,7 +15,9 @@ public class AgentTileModel : TileModel{
 	}
 
 	protected override void InnerSpawn(GameObject go) {
-		go.AddComponent<NavMeshAgent>();
+		NavMeshAgent nma = go.AddComponent<NavMeshAgent>();
+		nma.baseOffset = 0;
+		nma.height = 1;
 		go.AddComponent<StatsComponent>().Stats = StatsModel;
 	}
 }
@@ -52,9 +54,9 @@ public abstract class TileModel {
 	protected abstract void InnerSpawn(GameObject go);
 
 	internal GameObject Spawn(Transform parent, Vector3 pos) {
-		GameObject go = GameObject.Instantiate<GameObject>(Prefab, pos, Quaternion.identity, parent);
+		GameObject go = Object.Instantiate<GameObject>(Prefab, pos, Quaternion.identity, parent);
 		Rigidbody r = go.AddComponent<Rigidbody>();
-		r.constraints = RigidbodyConstraints.FreezeRotation;
+		r.constraints = RigidbodyConstraints.FreezeAll;
 		go.AddComponent<BoxCollider>();
 		InnerSpawn(go);
 		return go;
