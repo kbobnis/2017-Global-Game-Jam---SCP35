@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿using Controllers;
+using UnityEngine;
 
 public class InGamePosition : MonoBehaviour {
-
 	public const float OneStep = 0.1f;
 
 	internal void MoveBy(Vector2 vector, float oneStep) {

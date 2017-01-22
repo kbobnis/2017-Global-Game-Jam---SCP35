@@ -1,18 +1,20 @@
 ﻿using System;
+using Controllers;
 using UnityEngine;
 using UnityEngine.AI;
 using Object = UnityEngine.Object;
 
-public class AgentTileModel : TileModel {
+namespace Models {
+	public class AgentTileModel : AgentTileModel.TileModel {
 
-	public static readonly AgentTileModel Prisoner = new AgentTileModel(5, "prefabs/enemy", AgentStatsModel.Prisoner);
-	public static readonly AgentTileModel Mech = new AgentTileModel(7, "prefabs/mech", AgentStatsModel.Mech);
+		public static readonly AgentTileModel Prisoner = new AgentTileModel(5, "prefabs/enemy", AgentStatsModel.Prisoner);
+		public static readonly AgentTileModel Mech = new AgentTileModel(7, "prefabs/mech", AgentStatsModel.Mech);
 
-	public readonly AgentStatsModel StatsModel;
+		public readonly AgentStatsModel StatsModel;
 
-	public AgentTileModel(int tiledValue, string prefabPath, AgentStatsModel stats) : base(tiledValue, prefabPath) {
-		StatsModel = stats;
-	}
+		public AgentTileModel(int tiledValue, string prefabPath, AgentStatsModel stats) : base(tiledValue, prefabPath) {
+			StatsModel = stats;
+		}
 
 	protected override void InnerSpawn(GameObject go) {
 		NavMeshAgent nma = go.AddComponent<NavMeshAgent>();
@@ -25,18 +27,23 @@ public class AgentTileModel : TileModel {
 		colliderForDoors.transform.SetParent(go.transform);
 		colliderForDoors.transform.localPosition = new Vector3();
 	}
-}
 
-public class ObstacleTileModel : TileModel {
+	public class ObstacleTileModel : TileModel {
 
-	public static readonly ObstacleTileModel Wall = new ObstacleTileModel(3, "prefabs/wall");
-	public static readonly ObstacleTileModel Doors = new ObstacleTileModel(4, "prefabs/door");
-	public static readonly ObstacleTileModel Vial = new ObstacleTileModel(6, "prefabs/vial");
+		public static readonly ObstacleTileModel Wall = new ObstacleTileModel(3, "prefabs/wall");
+		public static readonly ObstacleTileModel Doors = new ObstacleTileModel(4, "prefabs/door");
+		public static readonly ObstacleTileModel Vial = new ObstacleTileModel(6, "prefabs/vial");
 	public static readonly ObstacleTileModel Lamp = new ObstacleTileModel(8, "prefabs/lamp");
 
-	public ObstacleTileModel(int tiledValue, string prefabPath) : base(tiledValue, prefabPath) {
-	}
+		public ObstacleTileModel(int tiledValue, string prefabPath) : base(tiledValue, prefabPath) {
+		}
 
+<<<<<<< HEAD
+		protected override void InnerSpawn(GameObject go) {
+			go.GetComponent<Rigidbody>().isKinematic = true;
+			go.AddComponent<NavMeshObstacle>();
+		}
+=======
 	protected override void InnerSpawn(GameObject go) {
 		go.GetComponent<Rigidbody>().isKinematic = true;
 		go.AddComponent<NavMeshObstacle>();
@@ -44,36 +51,32 @@ public class ObstacleTileModel : TileModel {
 			go.AddComponent<DoorController>();
 		}
 	}
+>>>>>>> 8b3cafcbe7efa561e5958799890cfb811ced06a4
 
-}
+	}
 
-public abstract class TileModel {
+	public abstract class TileModel {
 
-	private readonly int TiledValue;
-	public readonly GameObject Prefab;
+		private readonly int TiledValue;
+		public readonly GameObject Prefab;
 
-	public TileModel(int tiledValue, string prefabPath) {
-		TiledValue = tiledValue;
-		Prefab = Resources.Load<GameObject>(prefabPath);
-		if (Prefab == null) {
-			throw new Exception("There is no prefab at path: " + prefabPath);
+		public TileModel(int tiledValue, string prefabPath) {
+			TiledValue = tiledValue;
+			Prefab = Resources.Load<GameObject>(prefabPath);
+			if (Prefab == null) {
+				throw new Exception("There is no prefab at path: " + prefabPath);
+			}
 		}
-	}
 
-	protected abstract void InnerSpawn(GameObject go);
+		protected abstract void InnerSpawn(GameObject go);
 
-	internal GameObject Spawn(Transform parent, Vector3 pos) {
-		GameObject go = Object.Instantiate<GameObject>(Prefab, pos, Quaternion.identity, parent);
-		Rigidbody r = go.AddComponent<Rigidbody>();
-		r.constraints = RigidbodyConstraints.FreezeAll;
-		go.AddComponent<BoxCollider>();
-		InnerSpawn(go);
-		return go;
-	}
-
-	public static TileModel FromTiled(int v) {
-		if (v == 0) {
-			return null;
+		internal GameObject Spawn(Transform parent, Vector3 pos) {
+			GameObject go = Object.Instantiate<GameObject>(Prefab, pos, Quaternion.identity, parent);
+			Rigidbody r = go.AddComponent<Rigidbody>();
+			r.constraints = RigidbodyConstraints.FreezeAll;
+			go.AddComponent<BoxCollider>();
+			InnerSpawn(go);
+			return go;
 		}
 
 		TileModel[] all = new TileModel[] {
@@ -86,9 +89,22 @@ public abstract class TileModel {
 		};
 
 		foreach (TileModel t in all) {
-			if (t.TiledValue == v) {
-				return t;
+			TileModel[] all = new TileModel[] {
+				ObstacleTileModel.Doors,
+				ObstacleTileModel.Vial,
+				ObstacleTileModel.Wall,
+				AgentTileModel.Prisoner,
+				AgentTileModel.Mech,
+			};
+
+			foreach (TileModel t in all) {
+				if (t.TiledValue == v) {
+					return t;
+				}
 			}
+			if (v == 8) {
+				Debug.LogWarning("We don't have light support integrated yet.");
+				return null;
 		}
 		throw new Exception("There is no tile with tiled value " + v);
 	}

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Controllers;
+using Models;
+using UnityEngine;
 
 public class Game : MonoBehaviour {
 
