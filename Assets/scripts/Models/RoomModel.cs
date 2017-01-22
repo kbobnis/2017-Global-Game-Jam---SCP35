@@ -57,7 +57,7 @@ public class RoomModel {
 		go.AddComponent<BoxCollider>();
 		go.name = "Floor";
 		go.transform.SetParent(room.transform);
-		go.transform.position = new Vector3(Width / 2, -1, Height / 2); //middle of the room
+		go.transform.position = new Vector3(Width / 2, -1.13f, Height / 2); //middle of the room
 
 		return room;
 	}
