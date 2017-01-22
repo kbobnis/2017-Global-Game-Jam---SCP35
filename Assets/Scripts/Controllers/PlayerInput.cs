@@ -34,6 +34,8 @@ namespace Controllers {
 			{
 				if (OnRotateAngleChanged != null)
 				{
+					//zeby postac tylem nie chodzila.
+					angle2 *= -1;
 					OnRotateAngleChanged.Invoke(angle2);
 				}
 			}
