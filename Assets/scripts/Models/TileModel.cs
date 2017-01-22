@@ -2,43 +2,45 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class TileModel {
+public class AgentTileModel : TileModel{
 
-	public static readonly TileModel Wall = new TileModel(3, "prefabs/wall", NavType.Obstacle);
-	public static readonly TileModel Doors = new TileModel(4, "prefabs/door", NavType.Obstacle);
-	public static readonly TileModel Prisoner = new TileModel(5, "prefabs/enemy", NavType.Agent);
-	public static readonly TileModel Vial = new TileModel(6, "prefabs/vial", NavType.Obstacle);
+	public static readonly AgentTileModel Prisoner = new AgentTileModel(5, "prefabs/enemy", AgentStatsModel.Prisoner);
+	public static readonly AgentTileModel Mech = new AgentTileModel(7, "prefabs/mech", AgentStatsModel.Mech);
 
-	public static TileModel[] All = new TileModel[]{
-		Wall, Doors, Prisoner, Vial
-	};
+	public readonly AgentStatsModel StatsModel;
 
-	public enum NavType {
-		Agent, Obstacle
+	public AgentTileModel(int tiledValue, string prefabPath, AgentStatsModel stats) : base (tiledValue, prefabPath) {
+		StatsModel = stats;
 	}
 
-	internal GameObject Spawn(Transform parent, Vector3 pos) {
-		GameObject go = GameObject.Instantiate<GameObject>(Prefab, pos, Quaternion.identity, parent);
-		Rigidbody r = go.AddComponent<Rigidbody>();
-		r.constraints = RigidbodyConstraints.FreezeRotation;
-		r.isKinematic = _NavType == NavType.Obstacle;
-		go.AddComponent<BoxCollider>();
-		if (_NavType == NavType.Agent) {
-			go.AddComponent<NavMeshAgent>();
-		}
-		if (_NavType == NavType.Obstacle) {
-			go.AddComponent<NavMeshObstacle>();
-		}
-		return go;
+	protected override void InnerSpawn(GameObject go) {
+		go.AddComponent<NavMeshAgent>();
+		go.AddComponent<StatsComponent>().Stats = StatsModel;
+	}
+}
+
+public class ObstacleTileModel : TileModel {
+
+	public static readonly ObstacleTileModel Wall = new ObstacleTileModel(3, "prefabs/wall");
+	public static readonly ObstacleTileModel Doors = new ObstacleTileModel(4, "prefabs/door");
+	public static readonly ObstacleTileModel Vial = new ObstacleTileModel(6, "prefabs/vial");
+
+	public ObstacleTileModel(int tiledValue, string prefabPath) : base(tiledValue, prefabPath) {
 	}
 
+	protected override void InnerSpawn(GameObject go) {
+		go.GetComponent<Rigidbody>().isKinematic = true;
+		go.AddComponent<NavMeshObstacle>();
+	}
+
+}
+
+public abstract class TileModel {
 
 	private readonly int TiledValue;
 	public readonly GameObject Prefab;
-	public readonly NavType _NavType;
 
-	public TileModel(int tiledValue, string prefabPath, NavType navType) {
-		_NavType = navType;
+	public TileModel(int tiledValue, string prefabPath) {
 		TiledValue = tiledValue;
 		Prefab = Resources.Load<GameObject>(prefabPath);
 		if (Prefab == null) {
@@ -46,11 +48,31 @@ public class TileModel {
 		}
 	}
 
-	internal static TileModel FromTiled(int v) {
+	protected abstract void InnerSpawn(GameObject go);
+
+	internal GameObject Spawn(Transform parent, Vector3 pos) {
+		GameObject go = GameObject.Instantiate<GameObject>(Prefab, pos, Quaternion.identity, parent);
+		Rigidbody r = go.AddComponent<Rigidbody>();
+		r.constraints = RigidbodyConstraints.FreezeRotation;
+		go.AddComponent<BoxCollider>();
+		InnerSpawn(go);
+		return go;
+	}
+
+	public static TileModel FromTiled( int v) {
 		if (v == 0) {
 			return null;
 		}
-		foreach (TileModel t in All) {
+
+		TileModel[] all = new TileModel[] {
+			ObstacleTileModel.Doors,
+			ObstacleTileModel.Vial,
+			ObstacleTileModel.Wall,
+			AgentTileModel.Prisoner,
+			AgentTileModel.Mech,
+		};
+
+		foreach (TileModel t in all ) {
 			if (t.TiledValue == v) {
 				return t;
 			}

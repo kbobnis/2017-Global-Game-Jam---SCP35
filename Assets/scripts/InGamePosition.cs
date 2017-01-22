@@ -5,7 +5,8 @@ public class InGamePosition : MonoBehaviour {
 	public const float OneStep = 0.1f;
 
 	internal void MoveBy(Vector2 vector, float oneStep) {
-		transform.localPosition += new Vector3(vector.x * oneStep, 0, vector.y * oneStep);
+		oneStep *= GetComponent<StatsComponent>().Stats.Speed;
+		transform.localPosition += new Vector3(vector.x * oneStep , 0, vector.y * oneStep);
 	}
 
 	internal void SetRotation(Vector2 vector) {
