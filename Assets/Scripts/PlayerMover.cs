@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Controllers;
 
 [RequireComponent(typeof(PlayerInput), typeof(InGamePosition))]
