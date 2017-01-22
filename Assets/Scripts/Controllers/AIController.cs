@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace Controllers {
 	public enum State {
-		Idle, Alerted
+		Idle, Alerted, None
 	}
 
 	[RequireComponent(typeof(NavMeshAgent))]
@@ -13,13 +16,16 @@ namespace Controllers {
 		public NavMeshAgent NavMeshAgent;
 		public State AIState;
 		public Transform Target;
-		public float Range;
-		public float Angle;
+
+		protected AgentStatsModel ASM;
+
 		private float _delay;
+		private float _cooldown;
 
 		public void Start() {
 			NavMeshAgent = GetComponent<NavMeshAgent>();
 			Transform = transform;
+			ASM = GetComponent<StatsComponent>().Stats;
 		}
 
 		public void Update() {
@@ -31,33 +37,32 @@ namespace Controllers {
 
 			if(AIState == State.Idle) {
 				Idle();
-
-				Collider[] colliders = Physics.OverlapSphere(Transform.position, Range);
-				foreach(Collider col in colliders) {
-					Vector2 from = new Vector2(Transform.forward.x, Transform.forward.z);
-					Transform colliderTransform = col.transform;
-					Vector3 colliderPosition = colliderTransform.position;
-
-					Vector2 to = new Vector2(
-						colliderPosition.x - Transform.position.x,
-						colliderPosition.z - Transform.position.z);
-
-					Ray ray = new Ray(Transform.position, colliderPosition - Transform.position);
-					RaycastHit raycastHit;
-					if(Physics.Raycast(ray, out raycastHit, Range)) {
-						if(raycastHit.transform != colliderTransform) {
-							continue;
-						}
-					}
-					if(Mathf.Abs(Vector2.Angle(from, to)) < Angle / 2) {
-						if(col.GetComponent<PlayerInput>() != null) {
-							React(colliderTransform);
-							break;
-						}
+				LinkedList<GameObject> objs = Utility.GetVisibleCharacters(Transform, ASM.Range, ASM.Angle);
+				foreach(GameObject o in objs) {
+					if(o.GetComponent<PlayerController>() != null) {
+						AIState = State.Alerted;
+						Target = o.transform;
 					}
 				}
+
 			} else if(AIState == State.Alerted) {
-				NavMeshAgent.SetDestination(Target.position);
+				if(Target != null) {
+					NavMeshAgent.SetDestination(Target.position);
+				}
+			}
+
+			_cooldown += Time.deltaTime;
+			if(_cooldown > ASM.Cooldown) {
+				foreach(GameObject o in Utility.GetVisibleCharacters(
+					Transform,
+					ASM.AttackRange,
+					360)) {
+					if(o.GetComponent<PlayerController>() != null) {
+						StartCoroutine(Attack(o));
+						_cooldown = 0.0f;
+						break;
+					}
+				}
 			}
 		}
 
@@ -79,6 +84,17 @@ namespace Controllers {
 				Random.Range(0, 14) + 1.0f,
 				0,
 				Random.Range(0, 7) + 1.0f));
+		}
+
+		public IEnumerator Attack(GameObject o) {
+			yield return new WaitForSeconds(ASM.Delay);
+			if(gameObject != null &&
+			   o != null &&
+			   Vector2.Distance(
+				   new Vector2(Transform.position.x, Transform.position.z),
+				   new Vector2(o.transform.position.x, o.transform.position.z)) < ASM.Range) {
+				o.GetComponent<StatsComponent>().Damage();
+			}
 		}
 	}
 }

@@ -1,8 +1,9 @@
 ﻿using System;
+using Interface;
 using UnityEngine;
 
 namespace Controllers {
-	public class PlayerInput : MonoBehaviour {
+	public class PlayerController : MonoBehaviour {
 		public string InputSuffix;
 
 		public Action<Vector2> OnMoveAngleChanged;

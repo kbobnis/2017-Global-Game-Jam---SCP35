@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Controllers
+namespace Interface
 {
 	public class MoonzInput
 	{
