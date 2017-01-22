@@ -56,6 +56,7 @@ namespace Models {
 					TileModel tile = TileModel.FromTiled(RoomData.GetTileAt(i, j));
 					if (tile != null) {
 						GameObject tileGO = tile.Spawn(elements.transform, new Vector3(i, 0, j));
+		room.AddComponent<RoomComponent>();
 
 						//we will rotate doors by the corners
 						if (tile == ObstacleTileModel.Doors) {
@@ -75,6 +76,9 @@ namespace Models {
 							AIController aic = tileGO.AddComponent<AIController>();
 						}
 					}
+					if (tile == ObstacleTileModel.Doors) {
+						tileGO.GetComponent<DoorController>().DoorsAreOpening += room.GetComponent<RoomComponent>().MyDoorIsOpening;
+					}
 				}
 			}
 
@@ -90,12 +94,10 @@ namespace Models {
 			Rigidbody rCeil = ceilGO.AddComponent<Rigidbody>();
 			rCeil.isKinematic = true;
 			ceilGO.AddComponent<BoxCollider>();
-			ceilGO.name = "Ceiling";
-			ceilGO.transform.SetParent(room.transform);
-			ceilGO.transform.position = new Vector3(7.5f, 2, Height / 2f); //middle of the room
 
-			room.AddComponent<RoomComponent>().Init(floorGO, ceilGO, elements);
+		room.GetComponent<RoomComponent>().SetElements(floorGO, ceilGO, elements);
 
+		return room;
 			return room;
 		}
 	}

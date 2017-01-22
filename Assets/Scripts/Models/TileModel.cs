@@ -34,6 +34,7 @@ namespace Models {
 		public static readonly ObstacleTileModel Wall = new ObstacleTileModel(3, "prefabs/wall");
 		public static readonly ObstacleTileModel Doors = new ObstacleTileModel(4, "prefabs/door");
 		public static readonly ObstacleTileModel Vial = new ObstacleTileModel(6, "prefabs/vial");
+	public static readonly ObstacleTileModel Lamp = new ObstacleTileModel(8, "prefabs/lamp");
 
 		public ObstacleTileModel(int tiledValue, string prefabPath) : base(tiledValue, prefabPath) { }
 
@@ -70,29 +71,26 @@ namespace Models {
 			return go;
 		}
 
-		public static TileModel FromTiled(int v) {
-			if (v == 0) {
-				return null;
-			}
+		TileModel[] all = new TileModel[] {
+			ObstacleTileModel.Doors,
+			ObstacleTileModel.Vial,
+			ObstacleTileModel.Wall,
+			AgentTileModel.Prisoner,
+			AgentTileModel.Mech,
+			ObstacleTileModel.Lamp,
+		};
 
-			TileModel[] all = {
-				ObstacleTileModel.Doors,
-				ObstacleTileModel.Vial,
-				ObstacleTileModel.Wall,
-				AgentTileModel.Prisoner,
-				AgentTileModel.Mech,
-			};
-
-			foreach (TileModel t in all) {
-				if (t.TiledValue == v) {
+		public TileModel FromTiled(int v) {
+			foreach(TileModel t in all) {
+				if(t.TiledValue == v) {
 					return t;
 				}
 			}
-			if (v == 8) {
+			if(v == 8) {
 				Debug.LogWarning("We don't have light support integrated yet.");
 				return null;
 			}
 			throw new Exception("There is no tile with tiled value " + v);
+			}
 		}
-	}
 }
