@@ -117,7 +117,7 @@ namespace Characters.Abstract
 					throw new ArgumentOutOfRangeException();
 			}
 
-			Behaviour.StateMachine.Init(parent);
+			//Behaviour.StateMachine.Init(parent);
 
 			IsPlayerControlled = false;
 		}
