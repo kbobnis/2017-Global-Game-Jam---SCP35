@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using Object = UnityEngine.Object;
 
 namespace Models {
-	public class AgentTileModel : TileModel {
+	public class AgentTileModel : AgentTileModel.TileModel {
 
 		public static readonly AgentTileModel Prisoner = new AgentTileModel(5, "prefabs/enemy", AgentStatsModel.Prisoner);
 		public static readonly AgentTileModel Mech = new AgentTileModel(7, "prefabs/mech", AgentStatsModel.Mech);
@@ -16,12 +16,16 @@ namespace Models {
 			StatsModel = stats;
 		}
 
-		protected override void InnerSpawn(GameObject go) {
-			NavMeshAgent nma = go.AddComponent<NavMeshAgent>();
-			nma.baseOffset = 0;
-			nma.height = 1;
-			go.AddComponent<StatsComponent>().Stats = StatsModel;
-		}
+	protected override void InnerSpawn(GameObject go) {
+		NavMeshAgent nma = go.AddComponent<NavMeshAgent>();
+		nma.baseOffset = 0;
+		nma.height = 1;
+		go.AddComponent<StatsComponent>().Stats = StatsModel;
+
+		GameObject colliderForDoors = new GameObject("Collider");
+		colliderForDoors.AddComponent<SphereCollider>().isTrigger = true;
+		colliderForDoors.transform.SetParent(go.transform);
+		colliderForDoors.transform.localPosition = new Vector3();
 	}
 
 	public class ObstacleTileModel : TileModel {
@@ -33,10 +37,20 @@ namespace Models {
 		public ObstacleTileModel(int tiledValue, string prefabPath) : base(tiledValue, prefabPath) {
 		}
 
+<<<<<<< HEAD
 		protected override void InnerSpawn(GameObject go) {
 			go.GetComponent<Rigidbody>().isKinematic = true;
 			go.AddComponent<NavMeshObstacle>();
 		}
+=======
+	protected override void InnerSpawn(GameObject go) {
+		go.GetComponent<Rigidbody>().isKinematic = true;
+		go.AddComponent<NavMeshObstacle>();
+		if (this == ObstacleTileModel.Doors) {
+			go.AddComponent<DoorController>();
+		}
+	}
+>>>>>>> 8b3cafcbe7efa561e5958799890cfb811ced06a4
 
 	}
 
