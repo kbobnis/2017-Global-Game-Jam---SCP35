@@ -19,6 +19,11 @@ public class AgentTileModel : TileModel {
 		nma.baseOffset = 0;
 		nma.height = 1;
 		go.AddComponent<StatsComponent>().Stats = StatsModel;
+
+		GameObject colliderForDoors = new GameObject("Collider");
+		colliderForDoors.AddComponent<SphereCollider>().isTrigger = true;
+		colliderForDoors.transform.SetParent(go.transform);
+		colliderForDoors.transform.localPosition = new Vector3();
 	}
 }
 
@@ -34,6 +39,9 @@ public class ObstacleTileModel : TileModel {
 	protected override void InnerSpawn(GameObject go) {
 		go.GetComponent<Rigidbody>().isKinematic = true;
 		go.AddComponent<NavMeshObstacle>();
+		if (this == ObstacleTileModel.Doors) {
+			go.AddComponent<DoorController>();
+		}
 	}
 
 }
