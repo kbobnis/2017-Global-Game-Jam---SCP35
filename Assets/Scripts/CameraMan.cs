@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Controllers;
+using UnityEngine;
 
 public class CameraMan : MonoBehaviour {
 
@@ -13,5 +14,6 @@ public class CameraMan : MonoBehaviour {
 
 	internal void Follow(Transform transform) {
 		Following = transform;
+		AIController.Target = transform;
 	}
 }
