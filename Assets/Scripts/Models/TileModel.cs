@@ -7,7 +7,7 @@ using Object = UnityEngine.Object;
 namespace Models {
 	public class AgentTileModel : TileModel {
 
-		public static readonly AgentTileModel Prisoner = new AgentTileModel(5, "prefabs/enemy", AgentStatsModel.Prisoner);
+		public static readonly AgentTileModel Prisoner = new AgentTileModel(5, "prefabs/scientist", AgentStatsModel.Prisoner);
 		public static readonly AgentTileModel Mech = new AgentTileModel(7, "prefabs/chef", AgentStatsModel.Mech);
 
 		public readonly AgentStatsModel StatsModel;
@@ -22,7 +22,6 @@ namespace Models {
 			nma.height = 1;
 			go.AddComponent<StatsComponent>().Stats = StatsModel;
 
-			//adding trigger collider
 			GameObject colliderForDoors = new GameObject("Collider");
 			colliderForDoors.AddComponent<SphereCollider>().isTrigger = true;
 			colliderForDoors.transform.SetParent(go.transform);

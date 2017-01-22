@@ -16,7 +16,7 @@ public class RoomComponent : MonoBehaviour {
 	}
 
 	internal void UnravelRoom() {
-		if (!IsUnraveled) {
+		if (!IsUnraveled && CeilGO != null) {
 			IsUnraveled = true;
 			float y = CeilGO.transform.position.y;
 			gameObject.AddComponent<Changer>().Change(y, -2, 0.5f, (float actual) => {

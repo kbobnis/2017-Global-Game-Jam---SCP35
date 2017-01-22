@@ -6,7 +6,7 @@ public class DoorController : MonoBehaviour {
 
 	public Action DoorsAreOpening;
 
-	private bool IsOpening;
+	public bool IsOpening;
 
 	void OnTriggerEnter(Collider other) {
 

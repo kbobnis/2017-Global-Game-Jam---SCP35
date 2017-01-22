@@ -88,15 +88,16 @@ namespace Models {
 			floorGO.transform.SetParent(room.transform);
 			floorGO.transform.position = new Vector3(7.5f, -1.13f, Height / 2f); //middle of the room
 
-			GameObject ceilGO = GameObject.Instantiate<GameObject>(RoomModel.Room0.FloorPrefab);
-			Rigidbody rCeil = ceilGO.AddComponent<Rigidbody>();
-			rCeil.isKinematic = true;
-			ceilGO.AddComponent<BoxCollider>();
-			ceilGO.name = "Ceil";
-			ceilGO.transform.SetParent(room.transform);
-			ceilGO.transform.position = new Vector3(7.5f, 2, Height / 2f); //middle of the room
-
-			room.GetComponent<RoomComponent>().SetElements(floorGO, ceilGO, elements);
+			if (this != Corridor0 && this != Corridor1) {
+				GameObject ceilGO = GameObject.Instantiate<GameObject>(RoomModel.Room0.FloorPrefab);
+				Rigidbody rCeil = ceilGO.AddComponent<Rigidbody>();
+				rCeil.isKinematic = true;
+				ceilGO.AddComponent<BoxCollider>();
+				ceilGO.name = "Ceil";
+				ceilGO.transform.SetParent(room.transform);
+				ceilGO.transform.position = new Vector3(7.5f, 2, Height / 2f); //middle of the room
+				room.GetComponent<RoomComponent>().SetElements(floorGO, ceilGO, elements);
+			}
 			return room;
 		}
 	}
