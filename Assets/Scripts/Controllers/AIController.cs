@@ -13,8 +13,8 @@ namespace Controllers {
 
 		public Transform Transform;
 		public NavMeshAgent NavMeshAgent;
-		public State AIState;
-		public Transform Target;
+		public State AIState = State.Alerted;
+		public static Transform Target;
 
 		private float _delay;
 
@@ -31,11 +31,11 @@ namespace Controllers {
 		}
 
 		public void Update() {
-			if (_delay > 3.5f) {
-				AIState = State.Idle;
+			/*if (_delay > 3.5f) {
+//				AIState = State.Idle;
 				Target = null;
 				FindNewPatrolDestination();
-			}
+			}*/
 
 			if (AIState == State.Idle) {
 				Idle();
