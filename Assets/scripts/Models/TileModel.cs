@@ -1,19 +1,22 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.AI;
-using System.Collections.Generic;
 
 public class TileModel {
 
 	public static readonly TileModel Wall = new TileModel(3, "prefabs/wall", NavType.Obstacle);
 	public static readonly TileModel Doors = new TileModel(4, "prefabs/door", NavType.Obstacle);
 	public static readonly TileModel Prisoner = new TileModel(5, "prefabs/enemy", NavType.Agent);
+	public static readonly TileModel Vial = new TileModel(6, "prefabs/vial", NavType.Obstacle);
+
+	public static TileModel[] All = new TileModel[]{
+		Wall, Doors, Prisoner, Vial
+	};
 
 	public enum NavType {
 		Agent, Obstacle
 	}
 
-	//levelObject.transform, new Vector3(11, 0, 2)
 	internal GameObject Spawn(Transform parent, Vector3 pos) {
 		GameObject go = GameObject.Instantiate<GameObject>(Prefab, pos, Quaternion.identity, parent);
 		Rigidbody r = go.AddComponent<Rigidbody>();
@@ -29,9 +32,6 @@ public class TileModel {
 		return go;
 	}
 
-	public static TileModel[] All = new TileModel[]{
-		Wall, Doors, Prisoner
-	};
 
 	private readonly int TiledValue;
 	public readonly GameObject Prefab;
