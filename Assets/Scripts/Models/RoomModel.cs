@@ -1,4 +1,5 @@
 ﻿using System;
+using Controllers;
 using UnityEngine;
 
 public class RoomModel {
@@ -70,6 +71,9 @@ public class RoomModel {
 						Debug.Log("angle: " + angle);
 						//transform.rotation = Quaternion.Euler(0, angle * 180 / Mathf.PI, 0);
 						tileGO.transform.rotation = Quaternion.Euler(0, angle , 0);
+					}
+					if(tile is AgentTileModel) {
+						tileGO.AddComponent<AIController>();
 					}
 				}
 			}
