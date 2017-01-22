@@ -18,7 +18,6 @@ public class DoorController : MonoBehaviour {
 	private void OpenMyself() {
 		Vector3 pos = transform.position;
 		gameObject.AddComponent<Changer>().Change(pos.y, pos.y - 3, 0.5f, (float value) => {
-			Debug.Log("door are opening! " + value);
 			transform.position = new Vector3(pos.x, value, pos.z);
 		});
 	}

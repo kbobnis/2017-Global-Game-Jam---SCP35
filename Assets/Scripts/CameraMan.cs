@@ -2,9 +2,14 @@
 
 public class CameraMan : MonoBehaviour {
 
-	public Vector3 Offset = new Vector3(7, 7.5f, 0.49f);
+	public Transform Following;
+	public Vector3 Offset = new Vector3(-4, 11, -4f);
 
-	void Awake() {
-		transform.position = Offset;
+	private void Update() {
+		transform.position = Following.position + Offset;
+	}
+
+	internal void Follow(Transform transform) {
+		Following = transform;
 	}
 }

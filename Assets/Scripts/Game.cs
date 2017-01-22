@@ -10,6 +10,7 @@ public class Game : MonoBehaviour {
 		GameObject prisonerGO = AgentTileModel.Prisoner.Spawn(levelObject.transform, new Vector3(11, 0, 1));
 		prisonerGO.AddComponent<PlayerActionHandler>().Init(++PlayerCount);
 		prisonerGO.name = "Player 1";
+		Camera.main.transform.gameObject.AddComponent<CameraMan>().Follow(prisonerGO.transform);
 
 		GameObject prisoner2GO = AgentTileModel.Mech.Spawn(levelObject.transform, new Vector3(11, 0, 2));
 		prisoner2GO.AddComponent<PlayerActionHandler>().Init(++PlayerCount);
@@ -17,5 +18,7 @@ public class Game : MonoBehaviour {
 
 		GameObject go = levelObject.transform.GetChild(0).gameObject;
 		go.GetComponent<RoomComponent>().UnravelRoom();
+
+
 	}
 }
