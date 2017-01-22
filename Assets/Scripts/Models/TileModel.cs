@@ -4,40 +4,42 @@ using UnityEngine.AI;
 using Object = UnityEngine.Object;
 
 public class TileModel {
-	public static readonly TileModel Floor = new TileModel(2, "prefabs/floor", true, false, false);
-	public static readonly TileModel Wall = new TileModel(3, "prefabs/wall", true, false, true);
-	public static readonly TileModel Doors = new TileModel(4, "prefabs/door", true, false, true);
-	public static readonly TileModel Prisoner = new TileModel(5, "prefabs/enemy", false, true,  false);
 
-	internal GameObject Spawn() {
-		GameObject go = Object.Instantiate(Prefab);
+	public static readonly TileModel Wall = new TileModel(3, "prefabs/wall", NavType.Obstacle);
+	public static readonly TileModel Doors = new TileModel(4, "prefabs/door", NavType.Obstacle);
+	public static readonly TileModel Prisoner = new TileModel(5, "prefabs/enemy", NavType.Agent);
+	public static readonly TileModel Vial = new TileModel(6, "prefabs/vial", NavType.Obstacle);
+
+	public static TileModel[] All = new TileModel[]{
+		Wall, Doors, Prisoner, Vial
+	};
+
+	public enum NavType {
+		Agent, Obstacle
+	}
+
+	internal GameObject Spawn(Transform parent, Vector3 pos) {
+		GameObject go = Object.Instantiate(Prefab, pos, Quaternion.identity, parent);
 		Rigidbody r = go.AddComponent<Rigidbody>();
 		r.constraints = RigidbodyConstraints.FreezeRotation;
-		r.isKinematic = ShouldBeKinematic;
+		r.isKinematic = _NavType == NavType.Obstacle;
 		go.AddComponent<BoxCollider>();
-		if (ShouldBeAgent) {
+		if (_NavType == NavType.Agent) {
 			go.AddComponent<NavMeshAgent>();
 		}
-		if (ShouldBeObstacle) {
+		if (_NavType == NavType.Obstacle) {
 			go.AddComponent<NavMeshObstacle>();
 		}
 		return go;
 	}
 
-	public static TileModel[] All = new TileModel[]{
-		Floor, Wall, Doors, Prisoner
-	};
 
-	public readonly bool ShouldBeKinematic;
-	public readonly bool ShouldBeAgent;
-	public readonly bool ShouldBeObstacle;
 	private readonly int TiledValue;
 	public readonly GameObject Prefab;
+	public readonly NavType _NavType;
 
-	public TileModel(int tiledValue, string prefabPath, bool shouldBeKinematic, bool isAgent, bool isObstacle) {
-		ShouldBeKinematic = shouldBeKinematic;
-		ShouldBeAgent = isAgent;
-		ShouldBeObstacle = isObstacle;
+	public TileModel(int tiledValue, string prefabPath, NavType navType) {
+		_NavType = navType;
 		TiledValue = tiledValue;
 		Prefab = Resources.Load<GameObject>(prefabPath);
 		if (Prefab == null) {
