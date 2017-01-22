@@ -8,7 +8,7 @@ namespace Models {
 	public class AgentTileModel : TileModel {
 
 		public static readonly AgentTileModel Prisoner = new AgentTileModel(5, "prefabs/enemy", AgentStatsModel.Prisoner);
-		public static readonly AgentTileModel Mech = new AgentTileModel(7, "prefabs/mech", AgentStatsModel.Mech);
+		public static readonly AgentTileModel Mech = new AgentTileModel(7, "prefabs/chef", AgentStatsModel.Mech);
 
 		public readonly AgentStatsModel StatsModel;
 
@@ -22,11 +22,13 @@ namespace Models {
 			nma.height = 1;
 			go.AddComponent<StatsComponent>().Stats = StatsModel;
 
+			//adding trigger collider
 			GameObject colliderForDoors = new GameObject("Collider");
 			colliderForDoors.AddComponent<SphereCollider>().isTrigger = true;
 			colliderForDoors.transform.SetParent(go.transform);
 			colliderForDoors.transform.localPosition = new Vector3();
 		}
+
 	}
 
 	public class ObstacleTileModel : TileModel {
@@ -79,18 +81,17 @@ namespace Models {
 				ObstacleTileModel.Doors,
 				ObstacleTileModel.Vial,
 				ObstacleTileModel.Wall,
+				ObstacleTileModel.Lamp,
 				AgentTileModel.Prisoner,
 				AgentTileModel.Mech,
-				ObstacleTileModel.Lamp,
 			};
+			if (v == AgentTileModel.Prisoner.TiledValue || v == AgentTileModel.Mech.TiledValue) {
+				return null;
+			}
 			foreach(TileModel t in all) {
 				if(t.TiledValue == v) {
 					return t;
 				}
-			}
-			if(v == 8) {
-				Debug.LogWarning("We don't have light support integrated yet.");
-				return null;
 			}
 
 			throw new Exception("There is no tile with tiled value " + v);

@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Controllers {
 	public class StatsComponent : MonoBehaviour {
@@ -11,11 +10,10 @@ namespace Controllers {
 		}
 	}
 
-
 	public class AgentStatsModel {
 
-		public static readonly AgentStatsModel Prisoner = new AgentStatsModel(1f, 3f, 45f, 1.5f, 0.5f, 1f);
-		public static readonly AgentStatsModel Mech = new AgentStatsModel(2f, 6f, 30f, 2f, 1f, 2f);
+		public static readonly AgentStatsModel Prisoner = new AgentStatsModel(0.6f, 3f, 45f, 1.5f, 0.5f, 1f);
+		public static readonly AgentStatsModel Mech = new AgentStatsModel(1f, 0.1f, 30f, 2f, 1f, 2f);
 
 		public readonly float Speed;
 		public readonly float Range;

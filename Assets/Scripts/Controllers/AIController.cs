@@ -1,6 +1,5 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,53 +16,44 @@ namespace Controllers {
 		public State AIState;
 		public Transform Target;
 
-		protected AgentStatsModel ASM;
-
 		private float _delay;
-		private float _cooldown;
+
+
+		public Action OnTryToAttack;
 
 		public void Start() {
 			NavMeshAgent = GetComponent<NavMeshAgent>();
 			Transform = transform;
-			ASM = GetComponent<StatsComponent>().Stats;
+		}
+
+		private AgentStatsModel GetStats() {
+			return GetComponent<StatsComponent>().Stats;
 		}
 
 		public void Update() {
-			if(_delay > 3.5f) {
+			if (_delay > 3.5f) {
 				AIState = State.Idle;
 				Target = null;
 				FindNewPatrolDestination();
 			}
 
-			if(AIState == State.Idle) {
+			if (AIState == State.Idle) {
 				Idle();
-				LinkedList<GameObject> objs = Utility.GetVisibleCharacters(Transform, ASM.Range, ASM.Angle);
-				foreach(GameObject o in objs) {
-					if(o.GetComponent<PlayerController>() != null) {
+				LinkedList<GameObject> objs = Utility.GetVisibleCharacters(Transform, GetStats().Range, GetStats().Angle);
+				foreach (GameObject o in objs) {
+					if (o.GetComponent<GamepadInputController>() != null) {
 						AIState = State.Alerted;
 						Target = o.transform;
 					}
 				}
 
-			} else if(AIState == State.Alerted) {
-				if(Target != null) {
+			} else if (AIState == State.Alerted) {
+				if (Target != null) {
 					NavMeshAgent.SetDestination(Target.position);
 				}
 			}
 
-			_cooldown += Time.deltaTime;
-			if(_cooldown > ASM.Cooldown) {
-				foreach(GameObject o in Utility.GetVisibleCharacters(
-					Transform,
-					ASM.AttackRange,
-					360)) {
-					if(o.GetComponent<PlayerController>() != null) {
-						//StartCoroutine(Attack(o));
-						_cooldown = 0.0f;
-						break;
-					}
-				}
-			}
+			//OnTryToAttack();
 		}
 
 		public void Idle() {
@@ -81,20 +71,10 @@ namespace Controllers {
 
 		public void FindNewPatrolDestination() {
 			NavMeshAgent.SetDestination(new Vector3(
-				Random.Range(0, 14) + 1.0f,
+				UnityEngine.Random.Range(0, 14) + 1.0f,
 				0,
-				Random.Range(0, 7) + 1.0f));
+				UnityEngine.Random.Range(0, 7) + 1.0f));
 		}
 
-		public IEnumerator Attack(GameObject o) {
-			yield return new WaitForSeconds(ASM.Delay);
-			if(gameObject != null &&
-			   o != null &&
-			   Vector2.Distance(
-				   new Vector2(Transform.position.x, Transform.position.z),
-				   new Vector2(o.transform.position.x, o.transform.position.z)) < ASM.Range) {
-				o.GetComponent<StatsComponent>().Damage();
-			}
-		}
 	}
 }

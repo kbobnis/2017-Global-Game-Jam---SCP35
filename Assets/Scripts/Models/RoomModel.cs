@@ -1,5 +1,5 @@
-﻿using System;
-using Controllers;
+﻿using Controllers;
+using System;
 using UnityEngine;
 
 namespace Models {
@@ -70,11 +70,12 @@ namespace Models {
 							}
 							tileGO.transform.rotation = Quaternion.Euler(0, angle , 0);
 						}
-						if(tile is AgentTileModel) {
-							AIController aic = tileGO.AddComponent<AIController>();
-						}
 						if (tile == ObstacleTileModel.Doors) {
 							tileGO.GetComponent<DoorController>().DoorsAreOpening += room.GetComponent<RoomComponent>().MyDoorIsOpening;
+						}
+						if (tile is AgentTileModel) {
+							AIController aic = tileGO.AddComponent<AIController>();
+							tileGO.AddComponent<PlayerActionHandler>().InitForAI();
 						}
 					}
 				}
