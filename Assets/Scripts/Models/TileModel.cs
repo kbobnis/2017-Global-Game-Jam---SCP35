@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.AI;
+using Object = UnityEngine.Object;
 
 public class TileModel {
 	public static readonly TileModel Floor = new TileModel(2, "prefabs/floor", true, false, false);
@@ -9,7 +10,7 @@ public class TileModel {
 	public static readonly TileModel Prisoner = new TileModel(5, "prefabs/enemy", false, true,  false);
 
 	internal GameObject Spawn() {
-		GameObject go = GameObject.Instantiate<GameObject>(Prefab);
+		GameObject go = Object.Instantiate(Prefab);
 		Rigidbody r = go.AddComponent<Rigidbody>();
 		r.constraints = RigidbodyConstraints.FreezeRotation;
 		r.isKinematic = ShouldBeKinematic;

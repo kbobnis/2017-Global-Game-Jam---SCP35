@@ -31,5 +31,9 @@ namespace AIs {
 		public void FindNewPatrolDestination() {
 			NavMeshAgent.SetDestination(new Vector3(Random.Range(0, 14) + 1.0f, 0, Random.Range(0, 7) + 1.0f));
 		}
+
+		public void Update() {
+
+		}
 	}
 }
