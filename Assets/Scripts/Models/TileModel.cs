@@ -56,7 +56,7 @@ public abstract class TileModel {
 	internal GameObject Spawn(Transform parent, Vector3 pos) {
 		GameObject go = Object.Instantiate<GameObject>(Prefab, pos, Quaternion.identity, parent);
 		Rigidbody r = go.AddComponent<Rigidbody>();
-		r.constraints = RigidbodyConstraints.FreezeRotation;
+		r.constraints = RigidbodyConstraints.FreezeAll;
 		go.AddComponent<BoxCollider>();
 		InnerSpawn(go);
 		return go;
