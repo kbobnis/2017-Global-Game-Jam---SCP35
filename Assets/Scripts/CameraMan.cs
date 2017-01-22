@@ -3,7 +3,7 @@
 public class CameraMan : MonoBehaviour {
 
 	public Transform Following;
-	public Vector3 Offset = new Vector3(-4, 11, -4f);
+	public Vector3 Offset = new Vector3(-5, 10, -8);
 
 	private void Update() {
 		if (Following != null) {

@@ -4,10 +4,11 @@ namespace Models {
 	public class LevelModel {
 
 		public static readonly LevelModel Level1 = new LevelModel(new RoomModel[][] {
-			new RoomModel[] { RoomModel.Corridor0, RoomModel.Room0, RoomModel.Room0, RoomModel.Room0},
-			new RoomModel[] { RoomModel.Corridor1, RoomModel.Room0, RoomModel.Room0 },
-			new RoomModel[] { RoomModel.Corridor1, RoomModel.Room0 },
-			new RoomModel[] { RoomModel.Corridor1, RoomModel.Room0, RoomModel.Room0, RoomModel.Room0 },
+			new RoomModel[] { RoomModel.Corridor1, RoomModel.Room1, RoomModel.Room2 },
+			new RoomModel[] { RoomModel.Corridor0, RoomModel.Room3, RoomModel.Room4 },
+			new RoomModel[] { RoomModel.Corridor0, RoomModel.Room5, RoomModel.RoomB },
+			new RoomModel[] { RoomModel.Corridor0, },
+
 		});
 
 		public readonly RoomModel[][] Rooms;

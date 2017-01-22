@@ -9,44 +9,44 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1105083435265146}
+  m_RootGameObject: {fileID: 1167477887194032}
   m_IsPrefabParent: 1
---- !u!1 &1105083435265146
+--- !u!1 &1167477887194032
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4890370165637574}
-  - component: {fileID: 33533181731615120}
-  - component: {fileID: 23453952392317204}
+  - component: {fileID: 4197946581289628}
+  - component: {fileID: 33348078794367510}
+  - component: {fileID: 23058183343474262}
   m_Layer: 0
-  m_Name: mech
+  m_Name: floor2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4890370165637574
+--- !u!4 &4197946581289628
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1105083435265146}
+  m_GameObject: {fileID: 1167477887194032}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.861905, y: 9.340611, z: -6.1628156}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 67.764175, y: 155.54576, z: -109.48189}
+  m_LocalScale: {x: -1, y: 1, z: -1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23453952392317204
+--- !u!23 &23058183343474262
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1105083435265146}
+  m_GameObject: {fileID: 1167477887194032}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -72,10 +72,10 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!33 &33533181731615120
+--- !u!33 &33348078794367510
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1105083435265146}
-  m_Mesh: {fileID: 4300000, guid: 98ab5c20efab7a14b87ef12f5d969a2d, type: 3}
+  m_GameObject: {fileID: 1167477887194032}
+  m_Mesh: {fileID: 4300000, guid: 87061dbf2c03dc74dbb4daca1e6df864, type: 3}
