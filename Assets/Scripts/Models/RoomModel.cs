@@ -68,8 +68,6 @@ public class RoomModel {
 						if (j == Height - 1) {
 							angle = 270;
 						}
-						Debug.Log("angle: " + angle);
-						//transform.rotation = Quaternion.Euler(0, angle * 180 / Mathf.PI, 0);
 						tileGO.transform.rotation = Quaternion.Euler(0, angle , 0);
 					}
 					if(tile is AgentTileModel) {
@@ -79,13 +77,23 @@ public class RoomModel {
 			}
 		}
 
-		GameObject go = GameObject.Instantiate<GameObject>(FloorPrefab);
-		Rigidbody r = go.AddComponent<Rigidbody>();
+		GameObject floorGO = GameObject.Instantiate<GameObject>(FloorPrefab);
+		Rigidbody r = floorGO.AddComponent<Rigidbody>();
 		r.isKinematic = true;
-		go.AddComponent<BoxCollider>();
-		go.name = "Floor";
-		go.transform.SetParent(room.transform);
-		go.transform.position = new Vector3(Width / 2, -1.13f, Height / 2); //middle of the room
+		floorGO.AddComponent<BoxCollider>();
+		floorGO.name = "Floor";
+		floorGO.transform.SetParent(room.transform);
+		floorGO.transform.position = new Vector3(7.5f, -1.13f, Height / 2f); //middle of the room
+
+		GameObject ceilGO = GameObject.Instantiate<GameObject>(RoomModel.Room0.FloorPrefab);
+		Rigidbody rCeil = ceilGO.AddComponent<Rigidbody>();
+		rCeil.isKinematic = true;
+		ceilGO.AddComponent<BoxCollider>();
+		ceilGO.name = "Ceiling";
+		ceilGO.transform.SetParent(room.transform);
+		ceilGO.transform.position = new Vector3(7.5f, 2, Height / 2f); //middle of the room
+
+		room.AddComponent<RoomComponent>().Init(floorGO, ceilGO, elements);
 
 		return room;
 	}

@@ -50,7 +50,7 @@ namespace Controllers {
 						}
 					}
 					if(Mathf.Abs(Vector2.Angle(from, to)) < Angle / 2) {
-						if(col.GetComponent<PlayerController>() != null) {
+						if(col.GetComponent<PlayerInput>() != null) {
 							React(colliderTransform);
 							break;
 						}

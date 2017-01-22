@@ -3,14 +3,14 @@ using UnityEngine;
 using UnityEngine.AI;
 using Object = UnityEngine.Object;
 
-public class AgentTileModel : TileModel{
+public class AgentTileModel : TileModel {
 
 	public static readonly AgentTileModel Prisoner = new AgentTileModel(5, "prefabs/enemy", AgentStatsModel.Prisoner);
 	public static readonly AgentTileModel Mech = new AgentTileModel(7, "prefabs/mech", AgentStatsModel.Mech);
 
 	public readonly AgentStatsModel StatsModel;
 
-	public AgentTileModel(int tiledValue, string prefabPath, AgentStatsModel stats) : base (tiledValue, prefabPath) {
+	public AgentTileModel(int tiledValue, string prefabPath, AgentStatsModel stats) : base(tiledValue, prefabPath) {
 		StatsModel = stats;
 	}
 
@@ -19,6 +19,11 @@ public class AgentTileModel : TileModel{
 		nma.baseOffset = 0;
 		nma.height = 1;
 		go.AddComponent<StatsComponent>().Stats = StatsModel;
+
+		GameObject colliderForDoors = new GameObject("Collider");
+		colliderForDoors.AddComponent<SphereCollider>().isTrigger = true;
+		colliderForDoors.transform.SetParent(go.transform);
+		colliderForDoors.transform.localPosition = new Vector3();
 	}
 }
 
@@ -34,6 +39,9 @@ public class ObstacleTileModel : TileModel {
 	protected override void InnerSpawn(GameObject go) {
 		go.GetComponent<Rigidbody>().isKinematic = true;
 		go.AddComponent<NavMeshObstacle>();
+		if (this == ObstacleTileModel.Doors) {
+			go.AddComponent<DoorController>();
+		}
 	}
 
 }
@@ -62,7 +70,7 @@ public abstract class TileModel {
 		return go;
 	}
 
-	public static TileModel FromTiled( int v) {
+	public static TileModel FromTiled(int v) {
 		if (v == 0) {
 			return null;
 		}
@@ -75,10 +83,14 @@ public abstract class TileModel {
 			AgentTileModel.Mech,
 		};
 
-		foreach (TileModel t in all ) {
+		foreach (TileModel t in all) {
 			if (t.TiledValue == v) {
 				return t;
 			}
+		}
+		if (v == 8) {
+			Debug.LogWarning("We don't have light support integrated yet.");
+			return null;
 		}
 		throw new Exception("There is no tile with tiled value " + v);
 	}
