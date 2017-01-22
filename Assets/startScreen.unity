@@ -445,7 +445,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -688,7 +688,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1725428251
+  randomSeed: 294956724
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3285,7 +3285,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -939882160
+  randomSeed: 264891724
   InitialModule:
     serializedVersion: 3
     enabled: 1
