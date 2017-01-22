@@ -42,9 +42,7 @@ public class RoomModel {
 			for (int j = 0; j < Height; j++) {
 				TileModel tile = TileModel.FromTiled(RoomData.GetTileAt(i, j));
 				if (tile != null) {
-					GameObject tileGO = tile.Spawn();
-					tileGO.transform.SetParent(elements.transform);
-					tileGO.transform.position = new Vector3(i, 0, j);
+					GameObject tileGO = tile.Spawn(elements.transform, new Vector3(i, 0, j));
 					if (tile == TileModel.Doors) {
 						//tileGO.transform.Rotate()
 					}
@@ -52,17 +50,14 @@ public class RoomModel {
 			}
 		}
 
-		GameObject floor = new GameObject("Floor");
-		floor.transform.SetParent(room.transform);
-
-		for (int i = 0; i < Width; i++) {
-			for (int j = 0; j < Height; j++) {
-				TileModel tile = TileModel.Floor;
-				GameObject tileGO = tile.Spawn();
-				tileGO.transform.SetParent(floor.transform);
-				tileGO.transform.position = new Vector3(i, -1, j);
-			}
-		}
+		//public static readonly TileModel Floor = new TileModel(2, "prefabs/floor", true, false, false);
+		GameObject go = GameObject.Instantiate<GameObject>(Resources.Load<GameObject>("prefabs/floor"));
+		Rigidbody r = go.AddComponent<Rigidbody>();
+		r.isKinematic = true;
+		go.AddComponent<BoxCollider>();
+		go.name = "Floor";
+		go.transform.SetParent(room.transform);
+		go.transform.position = new Vector3(Width / 2, -1, Height / 2); //middle of the room
 
 		return room;
 	}
