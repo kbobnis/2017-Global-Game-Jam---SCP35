@@ -6,11 +6,11 @@ public class DoorController : MonoBehaviour {
 
 	public Action DoorsAreOpening;
 
-	private bool IsOpening;
+	public bool IsOpening;
 
 	void OnTriggerEnter(Collider other) {
 
-		if (other.transform.parent.GetComponent<PlayerInput>() != null && !IsOpening) {
+		if (other.transform.parent.GetComponent<GamepadInputController>() != null && !IsOpening) {
 			IsOpening = true;
 			OpenMyself();
 		}

@@ -833,7 +833,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: a959f15b712b86b4fafe038a2d29a92f, type: 2}
+  - {fileID: 2100000, guid: 9998fb6919a2b0f41970cf9709e4e1b5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -895,7 +895,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: a959f15b712b86b4fafe038a2d29a92f, type: 2}
+  - {fileID: 2100000, guid: 9998fb6919a2b0f41970cf9709e4e1b5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1112,7 +1112,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: a959f15b712b86b4fafe038a2d29a92f, type: 2}
+  - {fileID: 2100000, guid: 9998fb6919a2b0f41970cf9709e4e1b5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1229,7 +1229,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1357857352912730}
-  m_Mesh: {fileID: 4300000, guid: eb6ac23291594504f9dfbfafbabc3851, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 9f5ee544b7df7d74ca17bd79c60b63a4, type: 3}
 --- !u!33 &33177588135019240
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -1243,7 +1243,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1154936139330892}
-  m_Mesh: {fileID: 4300000, guid: 0590de864f66c4142af566f60429b1fb, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 6a4decfe287a44049af7d8fe632fb6d7, type: 3}
 --- !u!33 &33437383178792078
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -1264,7 +1264,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1396675240492502}
-  m_Mesh: {fileID: 4300000, guid: bf47720bf68ce0344b3f61f2ae9108fb, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 659defc3b67fb544381eaf780d36d870, type: 3}
 --- !u!33 &33501567679774642
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -1323,7 +1323,7 @@ Animator:
   m_GameObject: {fileID: 1972456033642304}
   m_Enabled: 0
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 93c3742b67cb8694a99ff040a3eb0aa2, type: 2}
+  m_Controller: {fileID: 9100000, guid: cdbfd3472d834734686e7e44ce436b76, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

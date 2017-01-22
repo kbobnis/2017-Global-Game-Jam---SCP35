@@ -10,7 +10,11 @@ public class Utility {
 		Collider[] colliders = Physics.OverlapSphere(viewer.position, sightRange);
 		LinkedList<GameObject> objects = new LinkedList<GameObject>();
 		foreach(Collider col in colliders) {
-			if(col.GetComponent<AIController>() == null && col.GetComponent<PlayerController>() == null) {
+
+			if((col.GetComponent<AIController>() == null 
+				&& col.GetComponent<GamepadInputController>() == null)
+				|| col.transform == viewer
+			) {
 				continue;
 			}
 			Vector2 from = new Vector2(viewer.forward.x, viewer.forward.z);
@@ -28,8 +32,11 @@ public class Utility {
 					continue;
 				}
 			}
-			if(Mathf.Abs(Vector2.Angle(from, to)) < sightAngle / 2) {
-				objects.AddFirst(col.gameObject);
+			float angle = 180 - Vector2.Angle(from, to); //this is insane workaround and hack. because models are being exported back facing
+			if (Mathf.Abs(angle) < sightAngle / 2) {
+				if (col.transform != viewer) {
+					objects.AddFirst(col.gameObject);
+				}
 			}
 		}
 		return objects;
