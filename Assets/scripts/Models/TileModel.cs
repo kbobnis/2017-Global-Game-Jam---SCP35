@@ -1,11 +1,12 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class TileModel {
-	public static readonly TileModel Floor = new TileModel(2, "prefabs/floor", true);
-	public static readonly TileModel Wall = new TileModel(3, "prefabs/wall", true);
-	public static readonly TileModel Doors = new TileModel(4, "prefabs/door", true);
-	public static readonly TileModel Prisoner = new TileModel(5, "prefabs/enemy", false);
+	public static readonly TileModel Floor = new TileModel(2, "prefabs/floor", true, false, false);
+	public static readonly TileModel Wall = new TileModel(3, "prefabs/wall", true, false, true);
+	public static readonly TileModel Doors = new TileModel(4, "prefabs/door", true, false, true);
+	public static readonly TileModel Prisoner = new TileModel(5, "prefabs/enemy", false, true,  false);
 
 	internal GameObject Spawn() {
 		GameObject go = GameObject.Instantiate<GameObject>(Prefab);
@@ -13,6 +14,12 @@ public class TileModel {
 		r.constraints = RigidbodyConstraints.FreezeRotation;
 		r.isKinematic = ShouldBeKinematic;
 		go.AddComponent<BoxCollider>();
+		if (ShouldBeAgent) {
+			go.AddComponent<NavMeshAgent>();
+		}
+		if (ShouldBeObstacle) {
+			go.AddComponent<NavMeshObstacle>();
+		}
 		return go;
 	}
 
@@ -21,11 +28,15 @@ public class TileModel {
 	};
 
 	public readonly bool ShouldBeKinematic;
+	public readonly bool ShouldBeAgent;
+	public readonly bool ShouldBeObstacle;
 	private readonly int TiledValue;
 	public readonly GameObject Prefab;
 
-	public TileModel(int tiledValue, string prefabPath, bool shouldBeKinematic) {
+	public TileModel(int tiledValue, string prefabPath, bool shouldBeKinematic, bool isAgent, bool isObstacle) {
 		ShouldBeKinematic = shouldBeKinematic;
+		ShouldBeAgent = isAgent;
+		ShouldBeObstacle = isObstacle;
 		TiledValue = tiledValue;
 		Prefab = Resources.Load<GameObject>(prefabPath);
 		if (Prefab == null) {

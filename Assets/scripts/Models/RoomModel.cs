@@ -45,6 +45,9 @@ public class RoomModel {
 					GameObject tileGO = tile.Spawn();
 					tileGO.transform.SetParent(elements.transform);
 					tileGO.transform.position = new Vector3(i, 0, j);
+					if (tile == TileModel.Doors) {
+						//tileGO.transform.Rotate()
+					}
 				}
 			}
 		}
