@@ -58,7 +58,7 @@ namespace Controllers {
 					ASM.AttackRange,
 					360)) {
 					if(o.GetComponent<PlayerController>() != null) {
-						StartCoroutine(Attack(o));
+						//StartCoroutine(Attack(o));
 						_cooldown = 0.0f;
 						break;
 					}

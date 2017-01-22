@@ -7,7 +7,7 @@ namespace Models {
 			new RoomModel[] { RoomModel.Corridor0, RoomModel.Room0, RoomModel.Room0, RoomModel.Room0},
 			new RoomModel[] { RoomModel.Corridor1, RoomModel.Room0, RoomModel.Room0 },
 			new RoomModel[] { RoomModel.Corridor1, RoomModel.Room0 },
-			new RoomModel[] { RoomModel.Corridor1, RoomModel.Room0 },
+			new RoomModel[] { RoomModel.Corridor1, RoomModel.Room0, RoomModel.Room0, RoomModel.Room0 },
 		});
 
 		public readonly RoomModel[][] Rooms;

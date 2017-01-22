@@ -6,7 +6,9 @@ public class CameraMan : MonoBehaviour {
 	public Vector3 Offset = new Vector3(-4, 11, -4f);
 
 	private void Update() {
-		transform.position = Following.position + Offset;
+		if (Following != null) {
+			transform.position = Following.position + Offset;
+		}
 	}
 
 	internal void Follow(Transform transform) {
