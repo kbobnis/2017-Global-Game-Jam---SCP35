@@ -1,5 +1,4 @@
 ﻿using System;
-using Characters;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
