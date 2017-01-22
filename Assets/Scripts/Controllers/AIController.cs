@@ -53,7 +53,7 @@ namespace Controllers {
 				}
 			}
 
-			//OnTryToAttack();
+			OnTryToAttack();
 		}
 
 		public void Idle() {

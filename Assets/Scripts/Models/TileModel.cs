@@ -84,9 +84,6 @@ namespace Models {
 				AgentTileModel.Prisoner,
 				AgentTileModel.Mech,
 			};
-			if (v == AgentTileModel.Prisoner.TiledValue || v == AgentTileModel.Mech.TiledValue) {
-				return null;
-			}
 			foreach(TileModel t in all) {
 				if(t.TiledValue == v) {
 					return t;
