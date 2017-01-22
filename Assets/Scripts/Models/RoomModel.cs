@@ -47,6 +47,7 @@ public class RoomModel {
 
 	public GameObject Generate() {
 		GameObject room = new GameObject("Room");
+		room.AddComponent<RoomComponent>();
 
 		GameObject elements = new GameObject("Elements");
 		elements.transform.SetParent(room.transform);
@@ -73,6 +74,9 @@ public class RoomModel {
 					if(tile is AgentTileModel) {
 						tileGO.AddComponent<AIController>();
 					}
+					if (tile == ObstacleTileModel.Doors) {
+						tileGO.GetComponent<DoorController>().DoorsAreOpening += room.GetComponent<RoomComponent>().MyDoorIsOpening;
+					}
 				}
 			}
 		}
@@ -93,7 +97,7 @@ public class RoomModel {
 		ceilGO.transform.SetParent(room.transform);
 		ceilGO.transform.position = new Vector3(7.5f, 2, Height / 2f); //middle of the room
 
-		room.AddComponent<RoomComponent>().Init(floorGO, ceilGO, elements);
+		room.GetComponent<RoomComponent>().SetElements(floorGO, ceilGO, elements);
 
 		return room;
 	}

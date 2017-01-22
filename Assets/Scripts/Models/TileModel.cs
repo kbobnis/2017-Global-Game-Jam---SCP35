@@ -32,6 +32,7 @@ public class ObstacleTileModel : TileModel {
 	public static readonly ObstacleTileModel Wall = new ObstacleTileModel(3, "prefabs/wall");
 	public static readonly ObstacleTileModel Doors = new ObstacleTileModel(4, "prefabs/door");
 	public static readonly ObstacleTileModel Vial = new ObstacleTileModel(6, "prefabs/vial");
+	public static readonly ObstacleTileModel Lamp = new ObstacleTileModel(8, "prefabs/lamp");
 
 	public ObstacleTileModel(int tiledValue, string prefabPath) : base(tiledValue, prefabPath) {
 	}
@@ -81,16 +82,13 @@ public abstract class TileModel {
 			ObstacleTileModel.Wall,
 			AgentTileModel.Prisoner,
 			AgentTileModel.Mech,
+			ObstacleTileModel.Lamp,
 		};
 
 		foreach (TileModel t in all) {
 			if (t.TiledValue == v) {
 				return t;
 			}
-		}
-		if (v == 8) {
-			Debug.LogWarning("We don't have light support integrated yet.");
-			return null;
 		}
 		throw new Exception("There is no tile with tiled value " + v);
 	}
