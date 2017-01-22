@@ -22,6 +22,5 @@ public class Game : MonoBehaviour {
 		prisoner2GO.AddComponent<PlayerActionHandler>().Init(++PlayerCount);
 		prisoner2GO.transform.position = new Vector3(11, 2, 0);
 
-		Camera.main.gameObject.AddComponent<CameraMan>();
 	}
 }
