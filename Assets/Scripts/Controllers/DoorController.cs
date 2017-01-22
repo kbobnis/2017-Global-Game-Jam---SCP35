@@ -12,6 +12,7 @@ public class DoorController : MonoBehaviour {
 
 		if (other.transform.parent.GetComponent<GamepadInputController>() != null && !IsOpening) {
 			IsOpening = true;
+			Sound.Play("sounds/doors_1", 0.025f);
 			OpenMyself();
 		}
 	}

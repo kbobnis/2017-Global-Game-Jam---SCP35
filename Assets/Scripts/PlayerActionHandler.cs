@@ -29,14 +29,19 @@ public class PlayerActionHandler : MonoBehaviour {
 
 	internal void OnAttack() {
 		if (_cooldown > GetStats().Cooldown) {
+			_cooldown = 0;
+			if (GetComponent<GamepadInputController>()) {
+				Sound.Play("sounds/fight", 0.1f);
+			}
 			if (GetComponent<Animator>() != null) {
 				GetComponent<Animator>().SetTrigger("attack");
 			}
 
 			foreach (GameObject o in Utility.GetVisibleCharacters(transform, GetStats().AttackRange, 90)) {
 				if (o.GetComponent<StatsComponent>() != null) {
-					AttackAnother(o);
-					_cooldown = 0.0f;
+					if (GetComponent<GamepadInputController>()) {
+						AttackAnother(o);
+					}
 					break;
 				}
 			}
@@ -48,7 +53,9 @@ public class PlayerActionHandler : MonoBehaviour {
 	}
 
 	public void AttackAnother(GameObject whom) {
-		whom.GetComponent<StatsComponent>().Damage();
+		if (!whom.GetComponent<GamepadInputController>()) {
+			whom.GetComponent<StatsComponent>().Damage();
+		}
 	}
 
 	internal void OnMoveAngleChanged(Vector2 angle) {

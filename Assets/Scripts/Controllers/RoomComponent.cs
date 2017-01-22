@@ -18,6 +18,7 @@ public class RoomComponent : MonoBehaviour {
 	internal void UnravelRoom() {
 		if (!IsUnraveled && CeilGO != null) {
 			IsUnraveled = true;
+			Sound.Play("sounds/podloga");
 			float y = CeilGO.transform.position.y;
 			gameObject.AddComponent<Changer>().Change(y, -2, 0.5f, (float actual) => {
 				Vector3 pos = CeilGO.transform.position;

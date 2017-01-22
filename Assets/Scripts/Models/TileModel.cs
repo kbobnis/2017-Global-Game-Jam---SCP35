@@ -9,6 +9,8 @@ namespace Models {
 
 		public static readonly AgentTileModel Prisoner = new AgentTileModel(5, "prefabs/scientist", AgentStatsModel.Prisoner);
 		public static readonly AgentTileModel Mech = new AgentTileModel(7, "prefabs/chef", AgentStatsModel.Mech);
+		public static readonly AgentTileModel Centipede = new AgentTileModel(9, "prefabs/centipede", AgentStatsModel.Centipede);
+		public static readonly AgentTileModel Guard = new AgentTileModel(10, "prefabs/guard", AgentStatsModel.Guard);
 
 		public readonly AgentStatsModel StatsModel;
 
@@ -83,10 +85,9 @@ namespace Models {
 				ObstacleTileModel.Lamp,
 				AgentTileModel.Prisoner,
 				AgentTileModel.Mech,
+				AgentTileModel.Centipede,
+				AgentTileModel.Guard,
 			};
-			if (v == AgentTileModel.Prisoner.TiledValue || v == AgentTileModel.Mech.TiledValue) {
-				return null;
-			}
 			foreach(TileModel t in all) {
 				if(t.TiledValue == v) {
 					return t;
