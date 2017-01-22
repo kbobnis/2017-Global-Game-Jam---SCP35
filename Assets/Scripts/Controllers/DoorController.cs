@@ -10,7 +10,7 @@ public class DoorController : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) {
 
-		if (other.transform.parent.GetComponent<PlayerInput>() != null && !IsOpening) {
+		if (other.transform.parent.GetComponent<PlayerController>() != null && !IsOpening) {
 			IsOpening = true;
 			OpenMyself();
 		}

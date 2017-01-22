@@ -48,7 +48,6 @@ namespace Models {
 
 		public GameObject Generate() {
 			GameObject room = new GameObject("Room");
-
 			GameObject elements = new GameObject("Elements");
 			elements.transform.SetParent(room.transform);
 			for (int i = 0; i < Width; i++) {
@@ -56,8 +55,7 @@ namespace Models {
 					TileModel tile = TileModel.FromTiled(RoomData.GetTileAt(i, j));
 					if (tile != null) {
 						GameObject tileGO = tile.Spawn(elements.transform, new Vector3(i, 0, j));
-		room.AddComponent<RoomComponent>();
-
+						room.AddComponent<RoomComponent>();
 						//we will rotate doors by the corners
 						if (tile == ObstacleTileModel.Doors) {
 							int angle = 180;
@@ -75,13 +73,12 @@ namespace Models {
 						if(tile is AgentTileModel) {
 							AIController aic = tileGO.AddComponent<AIController>();
 						}
-					}
-					if (tile == ObstacleTileModel.Doors) {
-						tileGO.GetComponent<DoorController>().DoorsAreOpening += room.GetComponent<RoomComponent>().MyDoorIsOpening;
+						if (tile == ObstacleTileModel.Doors) {
+							tileGO.GetComponent<DoorController>().DoorsAreOpening += room.GetComponent<RoomComponent>().MyDoorIsOpening;
+						}
 					}
 				}
 			}
-
 			GameObject floorGO = GameObject.Instantiate<GameObject>(FloorPrefab);
 			Rigidbody r = floorGO.AddComponent<Rigidbody>();
 			r.isKinematic = true;
@@ -89,15 +86,12 @@ namespace Models {
 			floorGO.name = "Floor";
 			floorGO.transform.SetParent(room.transform);
 			floorGO.transform.position = new Vector3(7.5f, -1.13f, Height / 2f); //middle of the room
-
 			GameObject ceilGO = GameObject.Instantiate<GameObject>(RoomModel.Room0.FloorPrefab);
 			Rigidbody rCeil = ceilGO.AddComponent<Rigidbody>();
 			rCeil.isKinematic = true;
 			ceilGO.AddComponent<BoxCollider>();
-
-		room.GetComponent<RoomComponent>().SetElements(floorGO, ceilGO, elements);
-
-		return room;
+			room.GetComponent<RoomComponent>().SetElements(floorGO, ceilGO, elements);
+			return room;
 			return room;
 		}
 	}
