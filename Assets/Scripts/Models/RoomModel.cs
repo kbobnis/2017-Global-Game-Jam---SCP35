@@ -1,4 +1,5 @@
 ﻿using System;
+using Controllers;
 using UnityEngine;
 
 public class RoomModel {
@@ -45,6 +46,9 @@ public class RoomModel {
 					GameObject tileGO = tile.Spawn(elements.transform, new Vector3(i, 0, j));
 					if (tile == ObstacleTileModel.Doors) {
 						//tileGO.transform.Rotate()
+					}
+					if(tile is AgentTileModel) {
+						tileGO.AddComponent<AIController>();
 					}
 				}
 			}
