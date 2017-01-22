@@ -29,6 +29,8 @@ public class PlayerActionHandler : MonoBehaviour {
 
 	internal void OnAttack() {
 		if (_cooldown > GetStats().Cooldown) {
+			_cooldown = 0;
+			Sound.Play("sounds/fight", 0.1f);
 			if (GetComponent<Animator>() != null) {
 				GetComponent<Animator>().SetTrigger("attack");
 			}
@@ -36,7 +38,6 @@ public class PlayerActionHandler : MonoBehaviour {
 			foreach (GameObject o in Utility.GetVisibleCharacters(transform, GetStats().AttackRange, 90)) {
 				if (o.GetComponent<StatsComponent>() != null) {
 					AttackAnother(o);
-					_cooldown = 0.0f;
 					break;
 				}
 			}

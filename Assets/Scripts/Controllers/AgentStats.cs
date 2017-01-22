@@ -5,6 +5,7 @@ namespace Controllers {
 		public AgentStatsModel Stats;
 
 		public AgentStatsModel Damage() {
+			Sound.Play("sounds/death", 0.2f);
 			Destroy(gameObject);
 			return Stats;
 		}

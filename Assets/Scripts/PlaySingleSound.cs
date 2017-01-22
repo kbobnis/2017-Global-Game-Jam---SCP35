@@ -1,21 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class Sound : MonoBehaviour {
 
 	private static Dictionary<AudioClip, OneSound> Sounds = new Dictionary<AudioClip, OneSound>();
+	private static Dictionary<string, AudioClip> Cache = new Dictionary<string, AudioClip>();
 
 	private float SoundStart = 0f;
 	public OneSound MySound;
 
-	public static void Play( AudioClip clip, float pan=0){
-		float volume = 1f;
+	public static void Play( AudioClip clip, float volume=1f){
 		if (clip != null){
 			if (!Sounds.ContainsKey(clip)) {
 				Sounds.Add(clip, new OneSound(clip, volume));
 			}
-			Sounds[clip].PlayAnother(pan);
+			Sounds[clip].PlayAnother(0);
 		}
+	}
+
+	internal static void Play(string path, float volume=1f) {
+		if (!Cache.ContainsKey(path)) {
+			Cache[path] = Resources.Load<AudioClip>(path);
+		}
+		Play(Cache[path], volume);
 	}
 
 	void Update() {
