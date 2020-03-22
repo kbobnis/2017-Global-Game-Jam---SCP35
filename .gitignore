@@ -92,3 +92,4 @@ fabric.properties
 .idea/
 Assets/Plugins/Editor/JetBrains/
 Assets/Plugins/Editor/JetBrains.meta
+/.vs
